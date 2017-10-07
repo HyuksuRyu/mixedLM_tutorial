@@ -20,8 +20,12 @@ if(!is.element('caret', installed.packages()[, 1])){
 if(!is.element('dplyr', installed.packages()[, 1])){
   install.packages('dplyr')
 }
+if(!is.element('lme4', installed.packages()[, 1])){
+  install.packages('lme4')
+}
 require('caret')
 require('dplyr')
+require('lme4')
 ```
 
 
