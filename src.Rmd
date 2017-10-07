@@ -1,9 +1,8 @@
 ---
-title: "R Notebook"
-output:
-  word_document: default
-  pdf_document: default
-  html_notebook: default
+title: "Linear model & Linear Mixed Effects in R Tutorial"
+output: beamer_presentation
+date: October 7, 2017
+author: Hyuksu Ryu
 ---
 
 
