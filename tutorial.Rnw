@@ -54,15 +54,13 @@
 \patchcmd{\beamer@sectionintoc}{\vskip1.5em}{\vskip0.5em}{}{}
 \makeatother
 
-\addtobeamertemplate{frametitle}{}{%
-\begin{tikzpicture}[remember picture, overlay]
-\node[anchor=north east, yshift=-15pt] at (current page.north east)
-{\includegraphics[height=.69cm]{figure/lab_logo_white.pdf}};
-%\node[anchor=north east, yshift=-12.5pt] at (current page.north east) {\includegraphics[height=.69cm]{figure/lab_logo_blue2.pdf}};
-\end{tikzpicture}}
+%\addtobeamertemplate{frametitle}{}{%
+%\begin{tikzpicture}[remember picture, overlay]
+%\node[anchor=north east, yshift=-15pt] at (current page.north east)
+%{\includegraphics[height=.69cm]{figure/Naver_clova_logo.pdf}};
+%\end{tikzpicture}}
 
-\title[Mispronunciation Diagnosis]{Mispronunciation Diagnosis of L2 English\\
-at Articulatory Level Using Articulatory Goodness-Of-Pronunciation Features}
+\title[LMM Tutorial]{A Tutorial for Linear models and Linear mixed effects models in R}
 
 \subtitle[실험음성학연구회]{실험음성학연구회}
 
@@ -79,7 +77,8 @@ at Articulatory Level Using Articulatory Goodness-Of-Pronunciation Features}
 %\institute{NAVER Corporation, Seongnam, Korea}
 \titlegraphic{
 	\includegraphics[height=.4cm]{figure/Naver_logo.pdf}
-	%\hspace*{2cm}
+	\hspace*{3cm}
+	\includegraphics[height=.5cm]{figure/Naver_clova_logo.pdf}
 	}
 
 \date{August 11, 2017}
