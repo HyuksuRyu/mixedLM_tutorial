@@ -3,15 +3,16 @@ title: "Tutorial for Linear model & Linear Mixed Effects in R"
 author: "Hyuksu Ryu"
 date: "October 7, 2017"
 output:
+  slidy_presentation:
+    incremental: yes
+    toc: yes
   beamer_presentation:
     incremental: no
     toc: yes
-  slidy_presentation:
-    incremental: yes
 ---
 
 # Intro of Intro
-## Set-up packages
+## Setting packages
 ```{r, message=FALSE, warning=FALSE}
 if(!is.element('caret', installed.packages()[, 1])){
   install.packages('caret')
