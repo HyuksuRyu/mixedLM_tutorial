@@ -56,19 +56,27 @@ Hyuksu Ryu
   </p>
   <p class="date">October 7, 2017</p>
 </div>
-<div id="intro-of-intro" class="titleslide slide section level1"><h1>Intro of Intro</h1></div><div id="set-up-packages" class="slide section level2">
-<h1>Set-up packages</h1>
+<div id="intro-of-intro" class="slide section level1">
+<h1>Intro of Intro</h1>
+</div>
+<div id="setting-packages" class="slide section level1">
+<h1>## Setting packages</h1>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">if(!<span class="kw">is.element</span>(<span class="st">'caret'</span>, <span class="kw">installed.packages</span>()[, <span class="dv">1</span>])){
   <span class="kw">install.packages</span>(<span class="st">'caret'</span>)
 }
 if(!<span class="kw">is.element</span>(<span class="st">'dplyr'</span>, <span class="kw">installed.packages</span>()[, <span class="dv">1</span>])){
   <span class="kw">install.packages</span>(<span class="st">'dplyr'</span>)
 }
+if(!<span class="kw">is.element</span>(<span class="st">'lme4'</span>, <span class="kw">installed.packages</span>()[, <span class="dv">1</span>])){
+  <span class="kw">install.packages</span>(<span class="st">'lme4'</span>)
+}
 <span class="kw">require</span>(<span class="st">'caret'</span>)
-<span class="kw">require</span>(<span class="st">'dplyr'</span>)</code></pre></div>
+<span class="kw">require</span>(<span class="st">'dplyr'</span>)
+<span class="kw">require</span>(<span class="st">'lme4'</span>)</code></pre></div>
 </div>
-<div id="linear-model" class="titleslide slide section level1"><h1>Linear model</h1></div><div id="setting-data-frame" class="slide section level2">
-<h1>Setting data frame</h1>
+<div id="linear-model" class="slide section level1">
+<h1>Linear model</h1>
+<h2 id="setting-data-frame">Setting data frame</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pitch =<span class="st"> </span><span class="kw">c</span>(<span class="dv">233</span>, <span class="dv">204</span>, <span class="dv">242</span>, <span class="dv">130</span>, <span class="dv">112</span>, <span class="dv">142</span>)
 sex =<span class="st"> </span><span class="kw">c</span>(<span class="kw">rep</span>(<span class="st">&quot;female&quot;</span>, <span class="dv">3</span>), <span class="kw">rep</span>(<span class="st">&quot;male&quot;</span>, <span class="dv">3</span>))
 my.df =<span class="st"> </span><span class="kw">data.frame</span>(sex, pitch) <span class="co"># data frame of 6 informants</span>
@@ -80,8 +88,7 @@ my.df</code></pre></div>
 ## 4   male   130
 ## 5   male   112
 ## 6   male   142</code></pre>
-</div><div id="linear-model-1" class="slide section level2">
-<h1>Linear model</h1>
+<h2 id="linear-model-1">Linear model</h2>
 <ul class="incremental">
 <li>Linear model</li>
 </ul>

@@ -3,16 +3,22 @@ title: "Tutorial for Linear model & Linear Mixed Effects in R"
 author: "Hyuksu Ryu"
 date: "October 7, 2017"
 output:
+  beamer_presentation:
+    incremental: yes
+    theme: Singapore
+    colortheme: dolphin
+    outertheme: smoothbars 
+    innertheme: circles
+    fonttheme: structurebold
+    toc: yes
   slidy_presentation:
     incremental: yes
-    toc: yes
-  beamer_presentation:
-    incremental: no
     toc: yes
 ---
 
 # Intro of Intro
 ## Setting packages
+
 ```{r, message=FALSE, warning=FALSE}
 if(!is.element('caret', installed.packages()[, 1])){
   install.packages('caret')
@@ -29,7 +35,7 @@ require('lme4')
 ```
 
 
-# Linear model
+# Linear model {.allowframebreaks}
 ## Setting data frame
 
 ```{r}
