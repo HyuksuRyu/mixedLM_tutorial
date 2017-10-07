@@ -1,0 +1,906 @@
+\documentclass{beamer}
+
+
+\mode<presentation>
+{
+\usetheme{Singapore}
+\usecolortheme{dolphin}
+%\useoutertheme{infolines}
+\useoutertheme[subsection=false]{smoothbars}
+%\useoutertheme[footline=authortitle, subsection=false]{miniframes}
+\useinnertheme{circles}
+\usefonttheme{structurebold}
+
+\setbeamercovered{transparent}
+}
+
+\usepackage[english]{babel}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{fancybox}
+\usepackage{hyperref}
+\usepackage{lmodern}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tipa}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{etoolbox}
+\usepackage{ragged2e}
+%\usepackage{enumitem}
+\usepackage{setspace}
+\usepackage{kotex}
+\usepackage{tikz}
+\usepackage{pgfpages}
+\singlespacing
+
+\usepackage{fontenc}
+\usepackage[utf8]{inputenc}
+
+\newcommand{\blue}[1]{{\color{blue}{#1}}}
+\newcommand{\red}[1]{{\color{red}{#1}}}
+\newcommand{\gray}[1]{{\color{gray}{#1}}}
+
+\setbeamercolor{subtitle}{fg=gray}
+
+\setbeamertemplate{note page}[plain]
+%\setbeameroption{show notes on second screen=right} % both
+\setbeameroption{hide notes} %only slidees
+%\setbeameroption{show only notes} %Only notes
+
+
+\makeatletter
+\patchcmd{\beamer@sectionintoc}{\vskip1.5em}{\vskip0.5em}{}{}
+\makeatother
+
+\addtobeamertemplate{frametitle}{}{%
+\begin{tikzpicture}[remember picture, overlay]
+\node[anchor=north east, yshift=-15pt] at (current page.north east)
+{\includegraphics[height=.69cm]{figure/lab_logo_white.pdf}};
+%\node[anchor=north east, yshift=-12.5pt] at (current page.north east) {\includegraphics[height=.69cm]{figure/lab_logo_blue2.pdf}};
+\end{tikzpicture}}
+
+\title[Mispronunciation Diagnosis]{Mispronunciation Diagnosis of L2 English\\
+at Articulatory Level Using Articulatory Goodness-Of-Pronunciation Features}
+
+\subtitle[Samsung]{Samsung Interview}
+
+%\subtitle{X. Yang, X. Kong, M. Hasegawa-Johnson, and Y. Xie (2016) \\\textit{in Proc. of} Speech Prosody 2016, pp. 247--251.}
+
+% - Use the \inst{?} command only if the authors have different
+%   affiliation.
+%\author{F.~Author\inst{1} \and S.~Another\inst{2}}
+\author[Ryu et al.]{Hyuksu Ryu\inst{1}}
+
+% - Use the \inst command only if there are several affiliations.
+% - Keep it simple, no one is interested in your street address.
+\institute[Seoul Nat'l Univ.]{\inst{1} Department of Linguistics, Seoul National University, Seoul, Korea}
+%\institute{National Institute of Korean Lanugage, Seoul, Korea}
+%\institute{NAVER Corporation, Seongnam, Korea}
+\titlegraphic{
+	\includegraphics[height=.4cm]{figure/SNU_logo_lr.pdf}
+	%\hspace*{2cm}
+	%\includegraphics[height=.4cm]{figure/Korean_logo_eng.pdf}
+	%\hspace*{2cm}
+	%\includegraphics[height=.4cm]{figure/Naver_logo.pdf}
+	%\includegraphics[height=.4cm]{figure/mindslab_logo.png}
+	}
+
+\date{August 11, 2017}
+
+
+
+% If you have a file called "university-logo-filename.xxx", where xxx
+% is a graphic format that can be processed by latex or pdflatex,
+% resp., then you can add a logo as follows:
+
+% \pgfdeclareimage[height=0.5cm]{university-logo}{university-logo-filename}
+% \logo{\pgfuseimage{university-logo}}
+
+
+
+% Delete this, if you do not want the table of contents to pop up at
+% the beginning of each subsection:
+\AtBeginSection[]
+{
+\begin{frame}<beamer>
+\frametitle{Outlines}
+\tableofcontents[currentsection, hideallsubsections]
+%\tableofcontents[currentsection]
+\end{frame}
+}
+
+\begin{document}
+
+<<include=FALSE>>=
+require(xtable)
+require(lattice)
+@
+
+\begin{frame}
+\maketitle
+\end{frame}
+
+\begin{frame}
+\frametitle{T.O.C}
+	\tableofcontents[subsectionstyle=hide]
+\end{frame}
+
+\section{Instruction}
+\subsection{Instruction}
+
+\begin{frame}
+\frametitle{Instruction}
+What we are dealing with?
+\begin{enumerate}
+\item \alert{Linear model} $\quad \leftarrow$
+\item Linear mixed model
+\end{enumerate}
+\end{frame}
+
+\section{Example Description}
+\subsection{Example Description}
+
+\begin{frame}
+\frametitle{Example description}
+Question
+\begin{itemize}
+\item Assume you knew nothing about males and females
+\item you were interested in whether \alert{voice pitch} of males and females differs, if so, by how much
+\end{itemize}
+
+\vspace{9pt}
+Experiment
+\begin{itemize}
+\item take a bunch of males and females
+\item ask them to say a single word
+\item measure the respective voice pitches
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Example description}
+
+\begin{center}
+\begin{tabular}{ccc}
+\toprule
+\texttt{Subject} & \texttt{Sex} & \texttt{Voice.Pitch(Hz)} \\
+\midrule
+1 & female & 233 \\
+2 & female & 204 \\
+3 & female & 242 \\
+4 & male & 130 \\
+5 & male & 112 \\
+6 & male & 142 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Example description}
+It looks like
+\begin{itemize}
+\item the female values seem to be about 100 Hz above the male ones
+\item females have higher voice pitch than males
+\end{itemize}
+
+\vspace{9pt}
+But
+\begin{itemize}
+\item it could be the case that females and males have the same pitch
+\item you were just unlucky and happened to choose some exceptionally high-pitched females and some exceptionally low-pitched males
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Example description}
+We might want
+\begin{itemize}
+\item a more precise estimate of the difference between males and females
+\item an estimate about how likely (or unlikely) that difference in voice pitch could have arisen just because of drawing an unlucky sample
+\end{itemize}
+
+$\rightarrow$ \alert{The linear model} comes in
+\begin{itemize}
+\item give some value about voice pitch for males and females
+\item as well as \alert{some probability values} as to how likely those values are
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Example description}
+Basic idea
+\begin{itemize}
+\item relationship b/w sex and voice pitch as a simple formula
+\item \verb|pitch ~ sex|
+\item This reads
+	\begin{itemize}
+	\item pitch predicted by sex
+	\item pitch as a function of sex
+	\end{itemize}
+\item LEFT: \texttt{pitch}
+	\begin{itemize}
+	\item dependent variable
+	\item the thing you measure
+	\end{itemize}
+\item RIGHT: \texttt{sex}
+	\begin{itemize}
+	\item independent variable
+	\item explanatory variable
+	\item predictor
+	\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Example Description}
+Error term
+\begin{itemize}
+\item Problem: the world is not perfect.
+\item Pitch is not \textit{completely} determined by sex
+\item a bunch of different factors such as language, dialect, etc
+\item We can never measure and control all of these things
+\item update our formula to capture the existence of these ``random'' factors.
+\item \verb|pitch ~ sex| + $\epsilon$ 
+\item $\epsilon$
+	\begin{itemize}
+	\item an error term
+	\item stands for all of the things that affect pitch that are not sex,
+	\item all of the stuff that is random or uncontrollable
+	\end{itemize}
+\end{itemize}
+
+\end{frame}
+
+\section[Exercise1]{Exercise 1: Pitch $\sim$ Sex}
+\subsection{Exercise}
+
+\begin{frame}[fragile]
+\frametitle{Exercise}
+Let's create the dataset
+<<>>=
+pitch = c(233,204,242,130,112,142)
+sex = c(rep("female",3),rep("male",3))
+my.df = data.frame(sex, pitch)
+@
+
+\pause
+
+<<>>=
+my.df
+@
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Exercise}
+\begin{itemize}
+\item \texttt{lm()}
+	\begin{itemize}
+	\item Generate the linear model
+	\item Note that we omit the ``$\epsilon$'' term 
+	\item we saved the model into an object \texttt{xmdl}
+	\end{itemize}
+\pause
+<<>>=
+xmdl = lm(pitch ~ sex, my.df)
+@
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Exercise}
+\begin{itemize}
+
+\item \texttt{summary()}
+	\begin{itemize}
+	\item To see what the linear model did
+	\end{itemize}
+<<eval=FALSE>>=
+summary(xmdl)
+@
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Exercise}
+
+\begin{columns}[T]
+\begin{column}{.7\textwidth}
+<<echo=FALSE, size='tiny'>>=
+summary(xmdl)
+@
+\end{column}
+\begin{column}{.35\textwidth}
+\vspace{15pt}
+$\leftarrow$ the model formula you entered 
+
+$\leftarrow$ the residuals
+
+\vspace{14pt}
+$\leftarrow$ the coefficients of the fixed effects
+
+\vspace{18pt}
+$\leftarrow$ the output prints some overall results of the model
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{Output}
+Multiple R-Squared
+\begin{itemize}
+\item $R^2$ 
+	\begin{itemize}
+	\item variance explained
+	\item variance accounted for
+	\item 0.921 (quite high) means 92.1\% of the stuff is ``explained'' by our model
+	\end{itemize}
+\item In this case, we have only one independent variable (the fixed effect ``sex''),
+\item $R^2$ reflects how much variance in our data is accounted for by \alert{differences b/w males and females}
+\item In general, b/c $R^2$ value depends on how messy or complex the system is
+\item frequently deal with much lower $R^2$ values. 
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Output}
+Multiple R-Squared and Adjusted R-squared
+\begin{itemize}
+\item If you have two or more variables (fixed effect), you see Adjusted R-squared ($R^2_{adj}$), instead of Multiple R-squared.
+\item $R^2$ has a property that it is increased when variables are added up, even though the variables are irrelevant.
+\item ``Adjusted'' R-squared are adjusted considering how many fixed effects you used.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Output}
+Meaning of p-value in the F-statistics
+\begin{itemize}
+\item \textbf{conditional probability}
+\item a probability \textit{under the condition that the $H_0$ is true}
+\item $H_0$: sex has no effect on pitch
+\item ``statistically significant'' when the conditional probability is lower than a threshold, adn the alternative hypothesis ($H_1$) is more likely.
+\item Report
+	\begin{itemize}
+	\item ``We constructed a linear model of pitch as a function of sex. This model was significnat (F(1,4)=46.61, p$>$0.01).''
+	\end{itemize}
+
+\vspace{9pt}
+\item How to distinguish b/w the significance of the overall model (considering all effects together) from the p-value of individual coefficients? $\rightarrow$ to be continue
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{output}
+Coefficients table
+<<echo=FALSE, size='scriptsize'>>=
+coef(summary(xmdl))
+@
+\begin{itemize}
+\item Compare p-value for the overall model and that on the right-hand side of the coefficients table
+\item Same b/c the model had only one fixed effect
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{output}
+Coefficients table
+<<echo=FALSE, size='scriptsize'>>=
+coef(summary(xmdl))
+@
+\begin{itemize}
+\item Why \texttt{sexmale}, rather than just \texttt{sex}?
+	\begin{itemize}
+	\item Estimate of \texttt{intercept}: mean of pitch of female 
+	\item Estimate of \texttt{sexmale}: difference of pitch b/w female and male
+	\item $\therefore$ pitch of male = Estimate of \texttt{intercept} + Estimate of \texttt{sexmale}
+	\end{itemize}
+
+\vspace{9pt}
+\begin{center}
+\begin{tabular}{cccc}
+
+\toprule
+& female & male & difference \\
+\midrule
+mean & \Sexpr{round(with(my.df,mean(pitch[sex=='female'])),3)} & \Sexpr{with(my.df, mean(pitch[sex=='male']))} & \Sexpr{round(with(my.df, mean(pitch[sex=='female']-mean(pitch[sex=='male']))),3) } \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{output}
+Graphical interpretation
+<<echo=FALSE, fig.height=4.5>>=
+xyplot(pitch~sex, data=my.df, col='black',ylim=c(-10,310),
+	panel=function(x,y){
+		panel.xyplot(x,y, col='black',pch=19)
+		panel.abline(a=226.83+98.33, b=-98.33)
+		panel.abline(h=226.83, lty='dotted')
+		panel.abline(v=1, lty='dotted')
+		panel.arrows(x0=2, y0=226.83, x1=2,y1=226.83-98.33)
+	})
+@
+\end{frame}
+\begin{frame}
+\frametitle{output}
+Secret of Intercept: Why did the model choose females to be the intercept?
+\pause
+
+\vspace{9pt}
+$\because$ \texttt{lm()} function simply takes whatever comes first in \alert{alphabet} 
+
+``f'' comes before ``m''
+
+\end{frame}
+
+\section[Exercise2]{Exercise 2: Pitch $\sim$ Age}
+\subsection[Ex2]{Exercise2}
+
+\begin{frame}[fragile]
+\frametitle{New model}
+Whether age predicts voice pitch
+\begin{itemize}
+\item continuous as explanatory 
+\item pitch $\sim$ age + $\epsilon$
+\end{itemize}
+\begin{center}
+\begin{tabular}{ccc}
+\toprule
+Subject & Age & Pitch(Hz) \\
+\midrule
+1 & 14 & 252 \\
+2 & 23 & 244 \\
+3 & 35 & 240 \\
+4 & 48 & 233 \\
+5 & 52 & 212 \\
+6 & 67 & 204 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{output}
+<<size='tiny'>>=
+age = c(14,23,35,48,52,67)
+pitch = c(252,244,240,233,212,204)
+my.df = data.frame(age, pitch)
+xmdl = lm(pitch~age, my.df)
+summary(xmdl)
+@
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{output}
+Coefficient table
+<<echo=FALSE, size='scriptsize'>>=
+summary(xmdl)$coefficients
+@
+\begin{itemize}
+\item the significance of the intercept is NOT important
+	\begin{itemize}
+	\item intercept means predicted pitch for people with age 0
+	\end{itemize}
+\item the significance of the age IS real interest.
+	\begin{itemize}
+	\item every increase of age by 1 $\rightarrow$ decrease voice pitch by 0.9099
+	\end{itemize}
+
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{output}
+Graphical interpretation
+<<echo=FALSE,fig.height=5>>=
+plot(pitch~age, data=my.df, pch=19, xlim=c(-5,90), ylim=c(175,290))
+abline(xmdl)
+#abline(h=267.0765, lty='dashed')
+lines(x=c(0,0), y=c(0,267.0765), lty='dashed')
+for(i in seq(10,80,by=10)){
+	lines(x=c(i,i),y=c(0,267.0765-i*0.9099), lty='dashed')
+	lines(x=c(i-10,i), y=c(267.0765-(i-10)*0.9099,267.0765-(i-10)*0.9099), lty='dashed')
+	arrows(x0=i, y0=267.0765-(i-10)*0.9099,x1=i,y1=267.0765-i*0.9099, length=0.1)
+}
+@
+
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{output}
+Meaningful and meaningless intercepts
+<<>>=
+my.df$age.c = my.df$age - mean(my.df$age)
+xmdl = lm(pitch~age.c, my.df)
+@
+\begin{itemize}
+\item new column ``age.c'' $\rightarrow$ ``centered'' data
+<<echo=FALSE,size='scriptsize'>>=
+summary(xmdl)$coefficients
+@
+\item Same slope, but \alert{different} intercept
+\item intercept here means pitch at mean age $\rightarrow$ mean pitch
+\item intercept becomes more meaningful than previous
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Going on}
+Scaling up
+\begin{itemize}
+\item What if we measured two factors, such as age and sex?
+\item Multiple regression
+	\begin{itemize}
+	\item one response variable as a function of multiple predictor variables
+	\item linear model is just another word for multiple regression
+	\end{itemize}
+\item formula
+\begin{displaymath}
+pitch \sim sex + age + \epsilon
+\end{displaymath}
+\item But, same interpretation
+\item The p-value at the bottom of the output
+	\begin{itemize}
+	\item p-value for the \alert{overall model}
+	\item p-value considers how well all of your fixed effects together help in accounting for variation in pitch
+	\end{itemize}
+\item The coefficient output
+	\begin{itemize}
+	\item p-value for the individual fixed effects
+	\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{The end of Linear model}
+\centering
+\Huge
+The end of linear model!
+
+But one more thing!
+\end{frame}
+
+\section{Assumption}
+\subsection{Assumptions}
+\begin{frame}
+\frametitle{Assumptions for LM}
+Assumptions for applying a linear model
+\begin{enumerate}
+\item Linearity
+\item Absense of collinearity
+\item Homoskedasticity
+\item Normality of residuals
+\item Absense of influential data points
+\item Independence
+\end{enumerate}
+\end{frame}
+
+\subsection{Linearity}
+\begin{frame}
+\frametitle{Linearity}
+Linearity?
+\begin{itemize}
+\item linear what?
+\pause
+\item linearity of residuals
+\pause
+\item So, what is residuals?
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Linearity}
+Residuals
+\begin{itemize}
+\item Deviations of the observed data points from the predicted values (fitted values)
+\item In this case, the residuals very small $\rightarrow$ well predicted
+\end{itemize}
+
+<<echo=FALSE,fig.height=4.3>>=
+xmdl = lm(pitch~age,my.df)
+plot(pitch~age,my.df, pch=19, xlim = c(-2,82), ylim = c(175, 285))
+abline(xmdl, lty='dashed')
+for(i in 1:dim(my.df)[1]){
+	with(my.df,lines(x=c(age[i],age[i]),y=c(pitch[i],xmdl$fitted.values[i]),col='red',lwd=1.5))
+}
+@
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Linearity}
+Residuals
+\begin{itemize}
+\item Rotate the plot $\rightarrow$ Residual plot
+
+<<residual_plot,fig.height=4.3, echo=-2, size='footnotesize'>>=
+plot(fitted(xmdl), residuals(xmdl),pch=19, 
+	xlab = 'Fitted values', ylab='Residuals' )
+abline(h=0, lty='dashed')
+@
+
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Linearity}
+Residual plot
+\begin{itemize}
+\item The fitted values - on the horizontal line
+\item residuals - the vertical deviations from the line
+\item \alert{No obvious pattern} in the residuals $\rightarrow$ \textbf{Linear}
+\pause
+\item What if there were a nonlinear or curvy pattern?
+\item this would indicate a violation of the linearity assumption
+\end{itemize}
+\begin{center}
+\includegraphics[scale=.4]{figure/fig1}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Linearity}
+What to do in case of non-linearity?
+\begin{enumerate}
+\item You might miss an important fixed effects. Add them
+\item Perform a \alert{nonlinear transformation} of your response, e.g., log-transform (\textit{commonly chosen})
+\item Perfrom a nonlinear transformation of your fixed effects
+	\begin{itemize}
+	\item if \textit{age} showed in a U-shaped
+	\item add age and $age^2$ as predictors
+	\end{itemize}	
+\item if stripes in residual plot, then you're most likely dealing with \alert{categorical data} $\rightarrow$ different model such as logistic models
+\end{enumerate}
+\begin{center}
+\includegraphics[scale=.3]{figure/stripe}
+\end{center}
+\end{frame}
+
+\subsection{Collinearity}
+\begin{frame}
+\frametitle{Collinearity}
+What is collinearity?
+\begin{itemize}
+\item When two fixed effects (predictors) are \alert{correlated with} each other,
+\item they are said to be \textbf{collinear}
+\end{itemize}
+
+Example
+\begin{itemize}
+\item you were interested in how average talking speed affects intellignece ratings
+\begin{displaymath}
+intelligence\ ratings \sim talking\ speed
+\end{displaymath}
+\item you measured several different indicators of talking speed
+	\begin{itemize}
+	\item syllables/sec, words/sec, sentences/sec
+	\end{itemize}
+\item they are likely to be highly correlated with each other
+\item if you use all of them as predictors within the same model, there will be \textbf{collinearity problem}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Collinearity}
+If there is collinearity
+\begin{itemize}
+\item the interpretation of the model becomes \alert{unstable}
+\item the significance of these correlated or collinear fixed effects is not easily interpretable
+\begin{itemize}
+\item $\because$ they might steal each other's \alert{explanatory power}
+\end{itemize}
+\item if multiple predictors are very similar to each other
+	\begin{itemize}
+	\item it becomes very difficult to decide what, in fact, is playing a big role
+	\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Collinearity}
+How to get rid of collinearity?
+\begin{enumerate}
+\item pre-empt the problem in the design stage
+	\begin{itemize}
+	\item focus on a few fixed effects that are not correlated with each other
+	\end{itemize}
+\item Or, think about which one is the most meaningful and drop the others
+	\begin{itemize}
+	\item DO NOT base this dropping decision on the \textbf{significance} (circular logic problem)
+	\end{itemize}
+\item Or, consider dimension-reduction techniques such as Principal Component Analysis
+	\begin{itemize}
+	\item transform several correlated variables into a smaller set of variables which you can then use as new fixed effects.
+	\end{itemize}
+\end{enumerate}
+\end{frame}
+
+\subsection{Homoskedasticity}
+\begin{frame}
+\frametitle{Homoskedasticity}
+What is Homoskedasticity?
+\begin{itemize}
+\item The variance of your data should be approximately equal across the range of your predicted values
+\item it is \textbf{extremely important assumption}
+\item If homoscedasticiy is violated $\rightarrow$ a problem with unequal variances
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Homoskedasticity}
+How to check whether homoscedasticity assumption were met?
+\begin{itemize}
+\item the \textbf{residuals} of your model need to roughly have a similar amount of deviation from the predicted values
+\item See Residual Plot
+\item Good residual plot essentially looks blob-like
+\end{itemize}
+<<echo=FALSE,fig.height=4>>=
+plot(rnorm(100),rnorm(100),xlab="Fitted value", ylab="Residuals" )
+abline(h=0, lty="dashed")
+@
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Homoskedasticity}
+Example of \textbf{heteroskedasticity}
+\begin{center}
+\includegraphics[scale=.25]{figure/fig2}
+\end{center}
+\begin{itemize}
+\item higher fitted values have larger residuals
+\end{itemize}
+
+What to do?
+\begin{itemize}
+\item As mentioned earlier, consider a \alert{log-transform}
+\end{itemize}
+\end{frame}
+
+\subsection{Normality of residuals}
+\begin{frame}
+\frametitle{Normality of residuals}
+Normality of residuals
+\begin{itemize}
+\item It is the one that is \alert{least important}
+\item LM is relatively robust agains violation of the normality assumption
+\item Gellman and Hill (2007), a famous book on LM and mixed models, DO NOT EVEN RECOMMEND diagnostics of the normality assumption
+\end{itemize}
+
+If you want to test the assumption
+\begin{itemize}
+\item Histogram
+<<eval=FALSE, size='scriptsize' >>=
+hist(residuals(xmdl))
+@
+\item Q-Q plot
+<<eval=FALSE, size='scriptsize'>>=
+qqnorm(residuals(xmdl))
+@
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Normality of residuals}
+Example of normality
+\begin{center}
+\includegraphics[scale=.2]{figure/fig3}
+\end{center}
+\begin{itemize}
+\item Thses look good
+\item The histogram is relatively bell-shaped
+\item The Q-Q plot indicates that the data falls on a straight line
+	\begin{itemize}
+	\item which means that it's similar to a normal distribution
+	\end{itemize}
+\item can conclude that there are no obvious violations of the normalitry assumption
+\end{itemize}
+\end{frame}
+
+\subsection{Absence of influential data points}
+\begin{frame}
+\frametitle{Absence of influential data points}
+What is the influential data point?
+\begin{itemize}
+\item If a particular data point is excluded, when values with which the coefficient is adjusted is large, it is an influential data point.
+\item Influential data points can drastically change the interpretation of the results, it can lead to instable results
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Absence of influential data points}
+How to check?
+\begin{itemize}
+\item Using \texttt{dfbeta()} function
+<<size='scriptsize'>>=
+dfbeta(xmdl)
+@
+\item DFbeta values are the values of coefficient as a result of \textit{leave-one-out diagnostics}
+\item For example, if data point 1 is excluded, the coefficient for age has to be adjsted by 0.0644 from -0.9099, so \Sexpr{-0.9099+0.0644}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Absence of influential data points}
+What is the criteria for decision of influential data point
+\begin{itemize}
+\item There is no clear, sharp criteria
+\item One thing for sure
+	\begin{itemize}
+	\item any value that changes the sign of the slope is \textbf{definitely} an influential point
+	\item be cautious to DFbeta value which is at least half of the absolute value of the slope (To author)
+	\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Absence of influential data points}
+How to proceed if there are influential data points?
+\begin{itemize}
+\item DO NOT SIMPLY EXCLUDE those points and report only the results on the reduced set
+	\begin{itemize}
+	\item The only case to exclude influential points is when
+	\item there is an obvious error (negative age)
+	\item or there is a value that obviously is the result due to a technical error (voice pitch value of 0)
+	\end{itemize}
+\item Run the analysis \textbf{with} the influential points and \textbf{without} the points, reports both analyses, state whether the interpretation of the results does or does not change 
+\end{itemize}
+\end{frame}
+
+\subsection{Independence}
+\begin{frame}
+\frametitle{Independence}
+What is independence?
+\begin{itemize}
+\item easy example - coin flip or roll of a dice
+\item each try is not influenced by another try
+\item each coin flip and each roll of a dice is absolutely independent from the outcome of the preceding coin flips or dice rolls
+\item The same should hold for your data points for LM analysis
+\item \alert{the data points should come from DIFFERENT SUBJECT}
+\item Each subject should only contribute one data point
+\item Independence assumption is by far \textbf{the most important one}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Independence}
+When you violate the indepence assumption?
+\begin{itemize}
+\item may greatly inflate chance of finding a \textit{spurious result}
+\item and it results in a p-value that is \textit{completely meaningless}.
+\end{itemize}
+
+How can guarantee independence?
+\begin{itemize}
+\item Independence is a \textbf{question of the experimental design}
+\item by only collecting one data point per subject
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Independence}
+If you want to collect more data per subject?
+\begin{itemize}
+\item such as in repreated measures design
+\item need to resolve these non-independence at the analysis stage
+\item This is where \textbf{MIXED MODELS} comes in
+\end{itemize}
+\pause
+\begin{center}
+\huge
+Mixed models will be proceeded in Tutorial 2
+\end{center}
+\end{frame}
+
+
+\end{document}
