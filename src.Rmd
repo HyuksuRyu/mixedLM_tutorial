@@ -1,31 +1,28 @@
 ---
-title: "Linear model & Linear Mixed Effects in R Tutorial"
+title: "Tutorial for Linear model & Linear Mixed Effects in R"
 author: "Hyuksu Ryu"
 date: "October 7, 2017"
 output:
+  beamer_presentation:
+    incremental: no
+    toc: yes
   slidy_presentation:
     incremental: yes
-  beamer_presentation:
-    incremental: yes
-    toc: yes
 ---
 
-
-
-# Introduction
-## R Markdown
-This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
-
-Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
-
-```{r}
-plot(cars)
+# Intro of Intro
+## Set-up packages
+```{r, message=FALSE, warning=FALSE}
+if(!is.element('caret', installed.packages()[, 1])){
+  install.packages('caret')
+}
+if(!is.element('dplyr', installed.packages()[, 1])){
+  install.packages('dplyr')
+}
+require('caret')
+require('dplyr')
 ```
 
-## Insert chunk
-Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
-
-When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
 
 # Linear model
 ## Setting data frame
@@ -37,9 +34,8 @@ my.df = data.frame(sex, pitch) # data frame of 6 informants
 my.df
 ```
 
-----
 ## Linear model
-- Linear model
+* Linear model
 ```{r}
 xmdl = lm(pitch ~ sex, my.df)
 summary(xmdl)
