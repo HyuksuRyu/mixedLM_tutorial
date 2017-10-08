@@ -1,0 +1,864 @@
+\documentclass[10p]{beamer}
+\setbeamertemplate{footline}[page number]{}
+\usepackage{graphicx}
+\usepackage{fancybox}
+\usepackage{graphics}
+\usepackage{hyperref}
+\usepackage{multirow}
+\usepackage{etoolbox}
+\usepackage{setspace}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{ragged2e}
+\singlespacing
+
+\mode<presentation>
+{
+%\usetheme{Frankfurt}
+%\usecolortheme{seahorse}
+%\setbeamercovered{transparent}
+\usetheme{Singapore}
+\usecolortheme{dolphin}
+%\useoutertheme{infolines}
+\useoutertheme[subsection=false]{smoothbars}
+%\useoutertheme[footline=authortitle, subsection=false]{miniframes}
+\useinnertheme{circles}
+\usefonttheme{structurebold}
+
+\setbeamercovered{transparent}
+}
+
+\newcommand{\blue}[1]{{\color{blue}{#1}}}
+\newcommand{\red}[1]{{\color{red}{#1}}}
+\newcommand{\gray}[1]{{\color{gray}{#1}}}
+
+\setbeamercolor{subtitle}{fg=gray}
+
+% 목차 부분의 줄 간격 조정
+\makeatletter
+\patchcmd{\beamer@sectionintoc}{\vskip1.5em}{\vskip0.5em}{}{}
+\makeatother
+
+
+%\author{Ryu, Hyuksu}
+\author{Ryu, Hyuksu}
+\institute{Naver Clova}
+\title{A Tutorial for Linear models and linear mixed effects models in R}
+\subtitle{Experimental Phonetics}
+\date{\today}
+\titlegraphic{
+	\includegraphics[height=.4cm]{../../Naver_logo.pdf}
+	\hspace*{3cm}
+	\includegraphics[height=.5cm]{../../Naver_clova_logo.pdf}
+}
+
+\AtBeginSection[]
+{
+\begin{frame}<beamer>
+\frametitle{Outline}
+\tableofcontents[currentsection,subsectionstyle=hide]
+\end{frame}
+}
+
+\begin{document}
+<<include=FALSE>>=
+require(xtable)
+require(lattice)
+require(lme4)
+@
+
+\begin{frame}
+\maketitle
+\end{frame}
+
+\begin{frame}
+\frametitle{T.O.C}
+	\tableofcontents[subsectionstyle=hide]
+\end{frame}
+
+\section{Instruction}
+\subsection{Instruction}
+
+\begin{frame}
+\frametitle{Instruction}
+What we are dealing with?
+\begin{enumerate}
+\item Linear model
+\item \alert{Linear mixed model} $\quad \leftarrow$
+\end{enumerate}
+\end{frame}
+
+\section[Effects]{Fixed and random effects}
+\subsection{Fixed and random effects}
+
+\begin{frame}
+\frametitle{Fixed and random effects}
+In tutorial 1,
+$$pitch \sim age + \epsilon$$
+\begin{itemize}
+\item age - fixed effect
+	\begin{itemize}
+	\item systematic part
+	\end{itemize}
+
+\item $\epsilon$ - random factor
+	\begin{itemize}
+	\item stochastic or probabilistic part
+	\item to represent the deviations from our predictions
+	\item ``random'' factors that we cannot control experimentally
+	\end{itemize}
+\item we will unpack this ``$\epsilon$''
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Model Description}
+In this tutorial,
+\begin{itemize}
+\item interested in
+	\begin{itemize}
+	\item relationship b/w pitch and politeness
+	\item relationship b/w pitch and sex
+	\end{itemize}
+\begin{displaymath}
+pitch \sim politeness + sex + \epsilon
+\end{displaymath}
+\item politeness
+	\begin{itemize}
+	\item categorical factor with two levels - formal/informal
+	\end{itemize}
+\item \textbf{multiple} measures per subject
+	\begin{itemize}
+	\item violation of independence assumption
+	\end{itemize}
+\item Every person has different voice pitch
+	\begin{itemize}
+	\item rendering these different responses inter-dependent rather than independent.
+	\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Random effect}
+Dealing with the situation, Add \textbf{random effect} for subject
+\begin{itemize}
+\item to resolve this non-independence 
+	\begin{itemize}
+	\item by assuming a different ``baseline'' pithc value for each subject
+	\item for example, Subject 1 - 233 Hz (mean), and Subject 2 - 210 Hz
+<<default, echo=FALSE>>=
+politeness= read.csv("http://www.bodowinter.com/tutorial/politeness_data.csv")
+politeness$scenario = factor(politeness$scenario)
+@
+
+<<box_subject,include=FALSE>>=
+with(politeness, plot(frequency~subject, col ='lightgrey'))
+@
+\centering
+\includegraphics[scale=.3]{figure/box_subject-1}
+
+	\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Model description}
+\begin{center}
+\includegraphics[scale=.25]{figure/box_subject-1}
+\end{center}
+From the box plot,
+\begin{itemize}
+\item pitch: male $<$ female
+\item BUT, lots of individual variation
+\end{itemize}
+
+We can model these individual difference
+\begin{itemize}
+\item assuming different \textbf{random intercepts} for each subject
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Model description}
+Why ``mixed'' model?
+\begin{itemize}
+\item{in addition to fixed effects,}
+\item{we add one or more random effects}
+  \begin{itemize}
+  \item part of $\epsilon$ that we cannot control for
+  \item in this case, a random effect for ``subject''
+  \item this characterizes idiosyncratic variation that is due to individual differences
+  \end{itemize}
+\end{itemize}
+Updated formula
+\begin{displaymath}
+pitch \sim politeness + sex + (1|subject) + \epsilon
+\end{displaymath}
+\end{frame}
+
+\begin{frame}
+\frametitle{Model description}
+One more random thing
+\begin{itemize}
+\item item!
+	\begin{itemize}
+	\item 7 different scenarios (items)
+	\item examples
+		\begin{itemize}
+		\item asking for a favor (polite/informal)
+		\item excusing for coming too late (polite/informal)
+		\end{itemize}
+	\end{itemize}
+\item also expect by-item variation
+	\begin{itemize}
+	\item For example,
+	\item ``excusing for coming too late'' have overall higher pitch, regardless of the influence of politeness
+	\item $\because$ it's more embarrassing than asking for a favor
+	\item 
+	\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Model description}
+<<box_item,include=FALSE>>=
+with(politeness, plot(frequency~scenario, col='lightgrey'))
+@
+
+\begin{center}
+\includegraphics[scale=.22]{figure/box_item-1}
+\end{center}
+Variation b/w items
+\begin{itemize}
+\item not as big as the variation b/w subjects
+\item but still noticeable, and better account for them in model
+\end{itemize}
+
+Adding an additional random effect
+\begin{displaymath}
+pitch \sim politeness + sex + (1|subject) + (1|item) + \epsilon
+\end{displaymath}
+\end{frame}
+
+\begin{frame}
+\frametitle{Mixed model}
+The upshot is that
+\begin{itemize}
+\item mixed model give you much more flexibility than traditional model
+\item take the full data into account
+\item consider by-item variation and by-subject variation both in a single model
+\end{itemize}
+\end{frame}
+
+\section[Mixed 1]{Mixed models 1}
+\subsection{Mixed models in R}
+\begin{frame}[fragile]{Pre-requisite}
+For a start,
+\begin{itemize}
+\item need to install the R package \textit{lme4}
+<<eval=FALSE>>=
+install.packages("lme4") # Linear Mixed Effect Model
+@
+\item after installation, laod the \textit{lme4} packages into R
+<<eval=FALSE>>=
+library(lme4)
+@
+\item a function we use for the mixed model
+  \begin{itemize}
+  \item \texttt{lmer()}
+  \item the mixed model equivalent of the funtion \texttt{lm()} in linear model
+  \end{itemize}
+
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Loading data}
+Loading data
+<<size='scriptsize'>>=
+politeness=read.csv("http://www.bodowinter.com/tutorial/politeness_data.csv")
+@
+<<size='scriptsize'>>=
+summary(politeness)
+@
+\begin{itemize}
+\item \texttt{scenario} should be factor
+\item should remove NA
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Loading data}
+\begin{itemize}
+\item Factorize
+<<size='scriptsize'>>=
+politeness$scenario = factor(politeness$scenario)
+@
+\item Remove NA
+<<size='scriptsize'>>=
+(idx = which(is.na(politeness$frequency)))
+politeness = politeness[-idx,]
+@
+\item Summary
+<<size='scriptsize'>>=
+summary(politeness)
+@
+
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Data structure}
+Variables
+\begin{itemize}
+\item Dependent measure 
+	\begin{itemize}
+	\item Frequency - Hz
+	\end{itemize}
+\item Fixed
+	\begin{itemize}
+	\item Gender - M/F
+	\item Attitude - inf/pol
+	\end{itemize}
+\item Random
+	\begin{itemize}
+	\item Subject
+	\item Scenario
+	\end{itemize}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Data structure}
+Relationship b/w politeness \& pitch
+<<box_freq,include=FALSE>>=
+boxplot(frequency ~ attitude*gender,politeness, col = c("white", "lightgrey"))
+@
+\begin{center}
+\includegraphics[scale=.28]{figure/box_freq-1}
+\end{center}
+\begin{itemize}
+\item polite $<$ informal
+\item But more overlap b/w two politeness categories for males than for females
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Building mixed model}
+How to build mixed model?
+<<size='scriptsize'>>=
+politeness.model = lmer(frequency ~ attitude + (1|subject) + 
+	(1|scenario), data=politeness, REML=FALSE)
+@
+Display the full result
+<<size='scriptsize', eval=FALSE>>=
+summary(politeness.model)
+@
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Building mixed model}
+<<size='scriptsize', echo=FALSE>>=
+summary(politeness.model)
+@
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Output}
+General summary statistics
+<<echo=FALSE, size='scriptsize'>>=
+summary(politeness.model)$AICtab
+@
+\begin{itemize}
+\item Akaike's Information Criterion
+\item log Likelihood
+\item etc
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Output}
+
+Random effects
+
+\vspace{9pt}
+\begin{tabular}{llll}
+
+\toprule
+Groups & Name & Variance & Std. Dev. \\
+\midrule
+scenario & (Intercept) & 219 & 14.80 \\
+subject & (Intercept) & 4015 & 63.36 \\
+Residual & & 646 & 25.42 \\
+\bottomrule
+\end{tabular}
+\begin{itemize}
+\item less variation in subject than scenario
+\item which is expected by boxplot
+\item ``Residual'' 
+	\begin{itemize}
+	\item stands for the variability that is not due to scenario or subject - our $\epsilon$
+	\item ``random'' variation from the predicted that are not due to subjects and items
+	\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Output}
+Fixed effect
+<<echo=FALSE, size='scriptsize'>>=
+summary(politeness.model)$coefficients
+@
+\begin{itemize}
+\item slope
+	\begin{itemize}
+\item same way of interpretation with linear model
+\item informal $\rightarrow$ polite: -19.695Hz
+	\end{itemize}
+\item intercept 
+	\begin{itemize}
+	\item pitch at informal state
+	\item fall halfway b/w males and females in the boxplot
+	\item average of our data for the informal condition
+	\item this is why we need gender as additional fixed effect
+	\end{itemize}
+\end{itemize}
+\end{frame}
+
+\section[Mixed 2]{Mixed models 2}
+\subsection{building model}
+
+\begin{frame}[fragile]
+\frametitle{Building mixed model 2}
+How to build mixed model?
+<<size='scriptsize'>>=
+politeness.model.2 = lmer(frequency ~ attitude + gender + (1|subject) + (1|scenario), data=politeness)
+@
+
+Display the full result
+<<eval=FALSE, size='scriptsize'>>=
+summary(politeness.model.2)
+@
+
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Building mixed model 2}
+<<echo=FALSE, size='scriptsize'>>=
+summary(politeness.model.2)
+@
+\end{frame}
+
+\subsection{output}
+\begin{frame}
+\frametitle{Output}
+Random effect
+
+\vspace{9pt}
+\begin{tabular}{llll}
+\toprule
+Groups & Name & Variance & Std.Dev. \\
+\midrule
+scenario & (Intercept) & 219.5 & 14.81 \\
+subject & (Intercept) & 615.6 & 24.81 \\
+Residual & & 645.9 & 25.42 \\
+\bottomrule
+\end{tabular}
+\begin{itemize}
+\item the variation of ``subject'' dropped drastically
+\item By adding the effect of gender, we have shifted a considerable amount of the variance that was previously in the random effects component (difference b/w male and female individuals) to the fixed effects component
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Output}
+Fixed effects
+<<size='scriptsize', echo=FALSE>>=
+summary(politeness.model.2)$coefficients
+@
+\begin{itemize}
+\item female $>$ male about 109 Hz
+\item intercept is much higher
+	\begin{itemize}
+	\item represents the female category (for informal condition)
+\item effect of attitude didn't change much
+	\end{itemize}
+\end{itemize}
+\end{frame}
+
+\section[Significance]{Statistical significance}
+\subsection{p-value}
+\begin{frame}
+\frametitle{p-value}
+p-value
+\begin{itemize}
+\item p-value for mixed models are not as straightforward as they are for the linear model
+\item There are multiple approaches (still controversial)
+\item \textbf{Likelihood Ratio Test} as a means to attain p-value
+	\begin{itemize}
+	\item the probability of seeing the data you collected given your model
+	\item we compared a full model (with the fixed effects in question)
+	\item against a reduced model without the effects in question
+	\item by the result, we conclude that a fixed effect is significant if the difference b/w the likelihood of these two models is significant
+	\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{p-value}
+Likelihood Ratio Test
+\begin{itemize}
+\item Note: should add the argument \alert{\texttt{REML=FALSE}}
+\item construct null model
+<<size='scriptsize'>>=
+politeness.null = lmer(frequency ~ gender + (1|subject) 
+	+ (1|scenario), data=politeness, REML=FALSE)
+@
+\item construct full model
+<<size='scriptsize'>>=
+politeness.model = lmer(frequency ~ attitude + gender 
+	+ (1|subject) + (1|scenario), data=politeness, REML=FALSE)
+@
+\item perform the likelihood ratio test using the \texttt{anova()}
+<<size='scriptsize', eval=FALSE>>=
+anova(politeness.null, politeness.model)
+@
+full model:\quad frequency $\sim$ attitude + gender \\
+reduced model:\quad frequency $\sim$ gender
+
+
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{p-value}
+Result
+<<size='scriptsize', echo=FALSE>>=
+anova(politeness.null, politeness.model)
+@
+Report
+\begin{center}
+\textrm{``... politeness affected pitch ($\chi^2$(1)=11.62, p=0.00065), lowering it by about 19.7 Hz $\pm$ 5.6 (standard errors)...''}
+\end{center}
+\end{frame}
+
+\subsection{interaction}
+\begin{frame}
+\frametitle{interaction}
+How to say regarding interaction
+\begin{itemize}
+\item If you have any an inter-dependence b/w two factors?
+\item that is interaction
+\item can test it the following way $\rightarrow$ likelihood test
+
+full model:\quad frequency $\sim$ attitude + gender \\
+reduced model:\quad frequency $\sim$ attitude * gender
+
+\item compare the models using \texttt{anova()}
+\item If \texttt{anova()} is significant, attitude and gender are significantly inter-dependent on each other
+
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{interaction}
+<<size='scriptsize'>>=
+politeness.model = lmer(frequency ~ attitude + gender + (1+attitude|subject)
+	+ (1+attitude|scenario), data=politeness, REML=FALSE)
+politeness.inter = lmer(frequency ~ attitude * gender + (1+attitude|subject)
+	+ (1+attitude|scenario), data=politeness, REML=FALSE)
+anova(politeness.model, politeness.inter)
+@
+No significant interaction here
+\end{frame}
+
+\section[Random slope]{Random slope and random intercepts}
+\subsection{slope}
+
+\begin{frame}[fragile]
+\frametitle{random slopes vs. random intercepts}
+the coefficients of the model by subject and by item
+<<size='footnotesize', eval=FALSE>>=
+coef(politeness.model)
+@
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{random slopes vs. random intercepts}
+<<size='scriptsize', echo=FALSE>>=
+coef(politeness.model)
+@
+\end{frame}
+
+\begin{frame}
+\frametitle{random slopes vs. random intercepts}
+Result
+\begin{itemize}
+\item each scenario and subject is assigned \textbf{a different intercept}
+  \begin{itemize}
+  \item by-subject and by-item variability
+  \end{itemize}
+\item the fixed effects (attitude and gender) are \textbf{all the same} for all subjects and items
+\item \textbf{random intercept model}
+  \begin{itemize}
+  \item baseline-differences in pitch
+  \item but, effect of politeness and gender is the same for all subjects and items
+  \end{itemize}
+\item is it a valid assumption?
+  \begin{itemize}
+  \item the effect of politeness might be different for differnt items and subjects
+  \end{itemize}
+\item so, we need a \textbf{random slope model}
+\end{itemize}
+\end{frame}
+
+\subsection{Random slope model}
+\begin{frame}[fragile]
+\frametitle{Random slope model}
+What we changed
+\begin{itemize}
+\item only the random effects
+\item \texttt{(1+attitude|subject)}
+  \begin{itemize}
+  \item this notation means differing responses to attitude
+  \item as well as differing baseline-levels of frequency (intercept)
+  \end{itemize}
+\end{itemize}
+Model
+<<size='scriptsize'>>=
+politeness.model = lmer(frequency ~ attitude + gender 
+                        + (1+attitude|subject) + (1+attitude|scenario),
+                        data=politeness, REML=FALSE)
+@
+Coefficients of this updated model
+<<size='footnotesize', eval=FALSE>>=
+coef(politeness.model)
+@
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Random slope model}
+<<size='scriptsize', echo=FALSE >>=
+coef(politeness.model)
+@
+\end{frame}
+
+\begin{frame}
+\frametitle{Random slope model}
+Interpretation
+\begin{itemize}
+\item the column for politeness is different for each subject and item
+\item but it is always negative and quite similar to each other
+\item means that despite individual variation, there is also consistency in how politeness affects the voice
+  \begin{itemize}
+  \item for all of speakers, the voice tends to go down in polite speech,
+  \item but for some people it goes down slightly more so than for others
+  \end{itemize}
+\item coefficients of gender do not change, since we did not specify random slope for the factor
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Random slope model}
+Obtain p-value in random slope model
+\begin{itemize}
+\item Likelihood ratio test
+\item Comparison of full model and the reduced model
+<<size='scriptsize'>>=
+politeness.model = lmer(frequency ~ attitude + gender 
+                        + (1+attitude|subject)+(1+attitude|scenario), 
+                        data=politeness, REML=FALSE)
+politeness.null = lmer(frequency ~ gender 
+                       + (1+attitude|subject) + (1+attitude|scenario), 
+                       data=politeness, REML = FALSE)
+@
+\item need the same random effects structure (random slope model)
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Random slope model}
+Likelyhood ratio test
+<<size='scriptsize'>>=
+anova(politeness.null, politeness.model)
+@
+Siginificant result!
+\end{frame}
+
+\begin{frame}
+\frametitle{Why random slope?}
+Questions?
+\begin{itemize}
+\item Which random slopes should I specify?
+\item Are random slopes necessry at all?
+\end{itemize}
+
+Answer!
+\begin{itemize}
+\item it makes lots of sense to include random slopes most of the time
+\item it is reasonable to expect that the effect of an experimental manipulation is not going to be the same for all items.
+\item several researches  have shown that mixed models w/o random slopes have a relatively high Type I error rate
+  \begin{itemize}
+  \item They tend to find a lot of significant results which are actually due to chance
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Why random slope?}
+In this model, why did we have random slope for only attitude, not gender? 
+\begin{itemize}
+\item we were not interested in gender differences
+\item they are well worth controlling for
+\item therefore, we only modeled by-subject and by-item variability in how politeness affects pitch
+\end{itemize}
+\end{frame}
+
+\section[Assume]{Assumptions}
+\subsection{Assumptions}
+\begin{frame}
+\frametitle{Assumptions in LM}
+Assumptions in LM
+\begin{enumerate}
+\item Linearity
+\item Absense of collinearity
+\item Homoskedasticity
+\item Normality of residuals
+\item Absense of influential data points
+\item Independence
+\end{enumerate}
+
+Good news!
+\begin{itemize}
+\item Everything applies straightforwardly to mixed model
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Independence}
+Why did we move to mixed model?
+\begin{itemize}
+\item to resolve non-independencies in our data
+\end{itemize}
+
+Cautions
+\begin{itemize}
+\item still should be cautious in violation
+\item missing fixed or random effects cause independence violation
+\item Choose fixed and random effects carefully 
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Influential data points}
+Infuential data points in LM
+\begin{itemize}
+\item \texttt{dfbeta()} function
+\end{itemize}
+
+But, in the mixed model,
+\begin{itemize}
+\item \texttt{dfbeta()} function does not work
+\item ``leave-one-out'' diagnosis by hand
+\item example script for leave-one-out diagnosis for attitude
+<<eval=FALSE, size='scriptsize'>>=
+all.res.attitude = numeric(nrow(politeness))
+all.res.gender = numeric(nrow(politeness))
+
+for(i in 1:nrow(politeness)){
+  myfullmodel = lmer(frequency ~ attitude + gender + 
+                       (1+attitude|subject)+(1+attitude|scenario), 
+                   data=politeness[-i,], REML=FALSE)
+  # 1- intercept, 2-attitude, 3-gender 
+  all.res.attitude[i] = fixef(myfullmodel)[2] 
+  all.res.gender[i] = fixef(myfullmodel)[3] # 
+}
+@
+\end{itemize}
+\end{frame}
+
+\section[Final]{Final notes on random vs. fixed}
+\subsection{Final}
+\begin{frame}
+\frametitle{Final notes}
+More about fixed and random effects
+\begin{itemize}
+\item random effect
+  \begin{itemize}
+  \item Generally something that can be expected to have 
+  \item a non-systematic, idiosyncratic, unpredictable, or ``random'' influence on data
+  \item often ``subject'' and ``item''
+  \item the things you generally want to generalize over the idiosyncrasies of individual subjects and items
+  \item generally ``sample'' from the population of interests
+  \item far away from ``exhausting the population'' b/c many many more subjects or items that you could have tested
+  \end{itemize}
+  
+\item fixed effect
+  \begin{itemize}
+  \item are expected to have a systematic and predictable influence on your data
+  \item ``exhaust the population of interest''
+  \item ``exhaust the levels of a factor''
+  \item For example, gender has only two levels and, by two categories, exhausts the category gender
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\subsection{Write-up}
+\begin{frame}[fragile]
+\frametitle{Write-up}
+More things to consider
+\begin{enumerate}
+\item Reproducibility
+\item Coefficients
+\item Citation
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\frametitle{Write-up}
+Reproducibility
+\begin{itemize}
+\item need to describe the model to such an extent that people can reproduce the analysis
+\item ask yourself the question
+\item ``Would I be able to recreate the analysis given the information that I provided?''
+\item If the answer is ``yes'', write-up is good
+\end{itemize}
+
+Coefficients
+\begin{itemize}
+\item report the actual coefficients/estimates
+\item not just whether an effect is significant or not
+\item also mention standard errors
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Write-up}
+Citation for R: citation()
+<<size='scriptsize', echo=FALSE>>=
+citation()
+@
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Write-up}
+Citation for package `lme4'
+<<size='scriptsize'>>=
+citation('lme4')
+@
+\end{frame}
+
+\begin{frame}
+\frametitle{Example Writing}
+\begin{block}{Example}
+\rmfamily \small \justifying
+We used R (R Core Team, 2014) and \textit{lme4} (Bates, Maechler, Bolker \& Walker, 2014) to perform a linear mixed effects analysis of the relationship between pitch and politeness. 
+As fixed effects, we entered politeness and gender (without interaction term) into the model. As random effects, we had intercepts for subjects and items, as well as by-subject and by-item random slopes for the effect of politeness. 
+Visual inspection of residual plots did not reveal any obvious deviations from homoscedasticity or normality. 
+P-values were obtained by likelihood ratio tests of the full model with the effect in question against the model without the effect in question.
+\end{block}
+\end{frame}
+
+\end{document}
