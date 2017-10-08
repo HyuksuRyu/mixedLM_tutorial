@@ -39,7 +39,7 @@
 \author{Ryu, Hyuksu}
 \institute{Naver Clova}
 \title{A Tutorial for Linear models and linear mixed effects models in R}
-\subtitle{Experimental Phonetics}
+\subtitle{실험음성학연구회}
 \date{\today}
 \titlegraphic{
 	\includegraphics[height=.4cm]{../../Naver_logo.pdf}
