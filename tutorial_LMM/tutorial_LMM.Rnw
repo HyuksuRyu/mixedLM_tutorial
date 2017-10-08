@@ -80,6 +80,22 @@ require(lme4)
 \subsection{Instruction}
 
 \begin{frame}
+\frametitle{Before beginning}
+Source of this tutorial
+\begin{itemize}
+  \item \href{http://www.bodowinter.com/tutorials.html}{Bodo Winter hompage} 
+  \url{http://www.bodowinter.com/tutorials.html}
+  \item \href{http://arxiv.org/pdf/1308.5499.pdf}{Linear models and linear mixed effects models in R}
+  \url{http://arxiv.org/pdf/1308.5499.pdf}
+\end{itemize}
+\vspace{9pt}
+Citation
+\begin{itemize}
+  \item Winter, B. (2013). Linear models and linear mixed effects models in R with linguistic applications. arXiv:1308.5499. 
+\end{itemize}
+\end{frame}
+
+\begin{frame}
 \frametitle{Instruction}
 What we are dealing with?
 \begin{enumerate}
