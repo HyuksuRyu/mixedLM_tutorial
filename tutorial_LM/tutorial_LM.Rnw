@@ -29,7 +29,6 @@
 
 \setbeamercolor{subtitle}{fg=gray}
 
-% 목차 부분의 줄 간격 조정
 \makeatletter
 \patchcmd{\beamer@sectionintoc}{\vskip1.5em}{\vskip0.5em}{}{}
 \makeatother
@@ -39,7 +38,7 @@
 \author{Ryu, Hyuksu}
 \institute{Naver Clova}
 \title{A Tutorial for Linear models and linear mixed effects models in R}
-\subtitle{실험음성학연구회}
+\subtitle{실험음성학연구회}
 \date{\today}
 \titlegraphic{
 	\includegraphics[height=.4cm]{../../Naver_logo.pdf}

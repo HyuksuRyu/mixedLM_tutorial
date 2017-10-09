@@ -1,5 +1,6 @@
 \documentclass[10p]{beamer}
 \setbeamertemplate{footline}[page number]{}
+\usepackage{lmodern}
 \usepackage{graphicx}
 \usepackage{fancybox}
 \usepackage{graphics}
