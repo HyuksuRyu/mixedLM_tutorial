@@ -37,9 +37,9 @@
 %\author{Ryu, Hyuksu}
 \author{Ryu, Hyuksu}
 \institute{Naver Clova}
-\title{A Tutorial for Linear models and linear mixed effects models in R}
-\subtitle{실험음성학연구회}
-\date{\today}
+\title{A Tutorial for Linear Models and Linear Mixed Effects Models in R}
+\subtitle{Experimental Phonetics}
+\date{Oct. 21, 2017}
 \titlegraphic{
 	\includegraphics[height=.4cm]{../../Naver_logo.pdf}
 	\hspace*{3cm}
@@ -71,6 +71,23 @@ require(lattice)
 
 \section{Instruction}
 \subsection{Instruction}
+
+\begin{frame}
+\frametitle{Before beginning}
+Source of this tutorial
+\begin{itemize}
+  \item \href{http://www.bodowinter.com/tutorials.html}{Bodo Winter hompage} 
+  \url{http://www.bodowinter.com/tutorials.html}
+  \item \href{http://arxiv.org/pdf/1308.5499.pdf}{Linear models and linear mixed effects models in R}
+  \url{http://arxiv.org/pdf/1308.5499.pdf}
+\end{itemize}
+\vspace{9pt}
+Citation
+\begin{itemize}
+  \item Winter, B. (2013). Linear models and linear mixed effects models in R with linguistic applications. arXiv:1308.5499. 
+\end{itemize}
+\end{frame}
+
 
 \begin{frame}
 \frametitle{Instruction}
