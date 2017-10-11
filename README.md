@@ -6,5 +6,5 @@
 또한, 현상을 설명함에 있어 저희가 고려하는 변인들 뿐 아니라, 통제할 수 없는 다양한 변수들이 작용할 수도 있습니다. 이러한 변수들을 고려하기 위해서는 선형혼합모형을 적용할 수 있습니다. 
 따라서 R에서 선형혼합모형을 모델링하는 방법과 결과물에서 Fixed effect 및 Random effect를 해석하는 방법을 함께 살펴보고자 합니다. 
 사전 공부를 위해서 Bodo Winter의 튜토리얼 자료(https://github.com/HyuksuRyu/mixedLM_tutorial/material)를 참고해 주시면 감사하겠습니다. 
-또한, 본 강연의 발표 자료는 https://github.com/HyuksuRyu/mixedLM_tutorial 에서 받으실 수 있습니다. 
+또한, 본 강연의 발표 자료 및 소스코드는 https://github.com/HyuksuRyu/mixedLM_tutorial 에서 받으실 수 있습니다. 
  
