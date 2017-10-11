@@ -35,7 +35,6 @@
 
 \setbeamercolor{subtitle}{fg=gray}
 
-% ¸ñÂ÷ ºÎºĞÀÇ ÁÙ °£°İ Á¶Á¤
 \makeatletter
 \patchcmd{\beamer@sectionintoc}{\vskip1.5em}{\vskip0.5em}{}{}
 \makeatother
@@ -46,6 +45,7 @@
 \institute{Naver Clova}
 \title{A Tutorial for Linear Models and Linear Mixed Effects Models in R}
 \subtitle{Experimental Phonetics} 
+%\subtitle{ì‹¤í—˜ìŒì„±í•™ì—°êµ¬íšŒ} 
 \date{\today}
 \titlegraphic{
 	\includegraphics[height=.4cm]{../../Naver_logo.pdf}
