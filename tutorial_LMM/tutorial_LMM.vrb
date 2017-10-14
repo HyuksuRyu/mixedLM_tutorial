@@ -1,0 +1,30 @@
+\frametitle{Write-up}
+Citation for package `lme4'
+\begin{knitrout}\scriptsize
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{citation}\hlstd{(}\hlstr{'lme4'}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+##
+## To cite lme4 in publications use:
+##
+##   Douglas Bates, Martin Maechler, Ben Bolker, Steve Walker (2015).
+##   Fitting Linear Mixed-Effects Models Using lme4. Journal of
+##   Statistical Software, 67(1), 1-48. doi:10.18637/jss.v067.i01.
+##
+## A BibTeX entry for LaTeX users is
+##
+##   @Article{,
+##     title = {Fitting Linear Mixed-Effects Models Using {lme4}},
+##     author = {Douglas Bates and Martin M{\"a}chler and Ben Bolker and Steve Walker},
+##     journal = {Journal of Statistical Software},
+##     year = {2015},
+##     volume = {67},
+##     number = {1},
+##     pages = {1--48},
+##     doi = {10.18637/jss.v067.i01},
+##   }
+\end{verbatim}
+\end{kframe}
+\end{knitrout}

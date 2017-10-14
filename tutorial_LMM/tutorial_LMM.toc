@@ -1,0 +1,20 @@
+\beamer@sectionintoc {1}{Instruction}{3}{0}{1}
+\beamer@subsectionintoc {1}{1}{Instruction}{4}{0}{1}
+\beamer@sectionintoc {2}{Fixed and random effects}{6}{0}{2}
+\beamer@subsectionintoc {2}{1}{Fixed and random effects}{7}{0}{2}
+\beamer@sectionintoc {3}{Mixed models 1}{15}{0}{3}
+\beamer@subsectionintoc {3}{1}{Mixed models in R}{16}{0}{3}
+\beamer@sectionintoc {4}{Mixed models 2}{26}{0}{4}
+\beamer@subsectionintoc {4}{1}{building model}{27}{0}{4}
+\beamer@subsectionintoc {4}{2}{output}{29}{0}{4}
+\beamer@sectionintoc {5}{Statistical significance}{31}{0}{5}
+\beamer@subsectionintoc {5}{1}{p-value}{32}{0}{5}
+\beamer@subsectionintoc {5}{2}{interaction}{35}{0}{5}
+\beamer@sectionintoc {6}{Random slope and random intercepts}{37}{0}{6}
+\beamer@subsectionintoc {6}{1}{slope}{38}{0}{6}
+\beamer@subsectionintoc {6}{2}{Random slope model}{41}{0}{6}
+\beamer@sectionintoc {7}{Assumptions}{48}{0}{7}
+\beamer@subsectionintoc {7}{1}{Assumptions}{49}{0}{7}
+\beamer@sectionintoc {8}{Final notes on random vs. fixed}{52}{0}{8}
+\beamer@subsectionintoc {8}{1}{Final}{53}{0}{8}
+\beamer@subsectionintoc {8}{2}{Write-up}{54}{0}{8}

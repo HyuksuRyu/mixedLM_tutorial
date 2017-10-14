@@ -1,0 +1,16 @@
+\beamer@sectionintoc {1}{Instruction}{3}{0}{1}
+\beamer@subsectionintoc {1}{1}{Instruction}{4}{0}{1}
+\beamer@sectionintoc {2}{Example Description}{6}{0}{2}
+\beamer@subsectionintoc {2}{1}{Example Description}{7}{0}{2}
+\beamer@sectionintoc {3}{Exercise 1: Pitch $\sim $ Sex}{13}{0}{3}
+\beamer@subsectionintoc {3}{1}{Exercise}{14}{0}{3}
+\beamer@sectionintoc {4}{Exercise 2: Pitch $\sim $ Age}{28}{0}{4}
+\beamer@subsectionintoc {4}{1}{Exercise2}{29}{0}{4}
+\beamer@sectionintoc {5}{Assumption}{36}{0}{5}
+\beamer@subsectionintoc {5}{1}{Assumptions}{37}{0}{5}
+\beamer@subsectionintoc {5}{2}{Linearity}{38}{0}{5}
+\beamer@subsectionintoc {5}{3}{Collinearity}{46}{0}{5}
+\beamer@subsectionintoc {5}{4}{Homoskedasticity}{49}{0}{5}
+\beamer@subsectionintoc {5}{5}{Normality of residuals}{52}{0}{5}
+\beamer@subsectionintoc {5}{6}{Absence of influential data points}{54}{0}{5}
+\beamer@subsectionintoc {5}{7}{Independence}{58}{0}{5}

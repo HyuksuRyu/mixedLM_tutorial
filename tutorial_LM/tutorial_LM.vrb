@@ -1,0 +1,23 @@
+\frametitle{Absence of influential data points}
+How to check?
+\begin{itemize}
+\item Using \texttt{dfbeta()} function
+\begin{knitrout}\scriptsize
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{dfbeta}\hlstd{(xmdl)}
+\end{alltt}
+\begin{verbatim}
+##   (Intercept)         age
+## 1  -3.3645662  0.06437573
+## 2  -1.6119656  0.02736278
+## 3   1.5481303 -0.01456709
+## 4  -0.0259835  0.05092767
+## 5   0.8707699 -0.06479736
+## 6   1.8551808 -0.06622744
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\item DFbeta values are the values of coefficient as a result of \textit{leave-one-out diagnostics}
+\item For example, if data point 1 is excluded, the coefficient for age has to be adjsted by 0.0644 from -0.9099, so -0.8455
+\end{itemize}
