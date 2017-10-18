@@ -133,6 +133,12 @@ Citation
 \begin{itemize}
   \item Winter, B. (2013). Linear models and linear mixed effects models in R with linguistic applications. arXiv:1308.5499. 
 \end{itemize}
+
+\vspace{9pt}
+How to download this tutorial
+\begin{itemize}
+  \item \href{https://github.com/HyuksuRyu/mixedLM_tutorial}{github page} \url{https://github.com/HyuksuRyu/mixedLM_tutorial}
+\end{itemize}
 \end{frame}
 
 
@@ -230,13 +236,12 @@ Basic idea
 	\end{itemize}
 \item LEFT: \texttt{pitch}
 	\begin{itemize}
-	\item dependent variable
+	\item response (dependent) variable
 	\item the thing you measure
 	\end{itemize}
 \item RIGHT: \texttt{sex}
 	\begin{itemize}
-	\item independent variable
-	\item explanatory variable
+	\item explanaatory (independent) variable
 	\item predictor
 	\end{itemize}
 \end{itemize}
@@ -301,12 +306,6 @@ Let's create the dataset
 \frametitle{Exercise}
 \begin{itemize}
 \item \texttt{lm()}
-	\begin{itemize}
-	\item Generate the linear model
-	\item Note that we omit the ``$\epsilon$'' term 
-	\item we saved the model into an object \texttt{xmdl}
-	\end{itemize}
-\pause
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
@@ -314,6 +313,11 @@ Let's create the dataset
 \end{alltt}
 \end{kframe}
 \end{knitrout}
+	\begin{itemize}
+	\item Generate the linear model
+	\item Note that we omit the ``$\epsilon$'' term 
+	\item we saved the model into an object \texttt{xmdl}
+	\end{itemize}
 \end{itemize}
 \end{frame}
 
@@ -388,13 +392,10 @@ Multiple R-Squared
 \item $R^2$ 
 	\begin{itemize}
 	\item variance explained
-	\item variance accounted for
 	\item 0.921 (quite high) means 92.1\% of the stuff is ``explained'' by our model
 	\end{itemize}
 \item In this case, we have only one independent variable (the fixed effect ``sex''),
 \item $R^2$ reflects how much variance in our data is accounted for by \alert{differences b/w males and females}
-\item In general, b/c $R^2$ value depends on how messy or complex the system is
-\item frequently deal with much lower $R^2$ values. 
 \end{itemize}
 \end{frame}
 
@@ -414,22 +415,26 @@ Multiple R-Squared and Adjusted R-squared
 Meaning of p-value in the F-statistics
 \begin{itemize}
 \item \textbf{conditional probability}
-\item a probability \textit{under the condition that the $H_0$ is true}
-\item $H_0$: sex has no effect on pitch
-\item ``statistically significant'' when the conditional probability is lower than a threshold, adn the alternative hypothesis ($H_1$) is more likely.
+  \begin{itemize}
+    \item a probability \textit{under the condition that the $H_0$ is true}
+  \end{itemize}
+\item $H_0$: Explanary variables (\textit{sex}) have no effect on the response (\textit{pitch})
+\item ``statistically significant'' when the conditional probability is lower than a threshold, and the alternative hypothesis ($H_1$) is more likely.
 \item Report
 	\begin{itemize}
-	\item ``We constructed a linear model of pitch as a function of sex. This model was significnat (F(1,4)=46.61, p$>$0.01).''
+	\item ``We constructed a linear model of pitch as a function of sex. This model was significnat (F(1,4)=46.61, p$<$0.01).''
 	\end{itemize}
 
-\vspace{9pt}
+\item Significance of the overall model 
 \item How to distinguish b/w the significance of the overall model (considering all effects together) from the p-value of individual coefficients? $\rightarrow$ to be continue
 \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{output}
+\frametitle{Output}
 Coefficients table
+\begin{itemize}
+\item Significance of the individual coefficients
 \begin{knitrout}\scriptsize
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{verbatim}
@@ -439,31 +444,12 @@ Coefficients table
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
-\begin{itemize}
-\item Compare p-value for the overall model and that on the right-hand side of the coefficients table
-\item Same b/c the model had only one fixed effect
-\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]
-\frametitle{output}
-Coefficients table
-\begin{knitrout}\scriptsize
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{verbatim}
-##              Estimate Std. Error   t value     Pr(>|t|)
-## (Intercept) 226.33333   10.18441 22.223508 2.426952e-05
-## sexmale     -98.33333   14.40293 -6.827314 2.406892e-03
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
-\begin{itemize}
 \item Why \texttt{sexmale}, rather than just \texttt{sex}?
-	\begin{itemize}
 	\item Estimate of \texttt{intercept}: mean of pitch of female 
 	\item Estimate of \texttt{sexmale}: difference of pitch b/w female and male
-	\item $\therefore$ pitch of male = Estimate of \texttt{intercept} + Estimate of \texttt{sexmale}
-	\end{itemize}
+	
+$\therefore$ Pitch(male) = \texttt{intercept} + \texttt{sexmale}
+\end{itemize}
 
 \vspace{9pt}
 \begin{center}
@@ -476,20 +462,62 @@ mean & 226.333 & 128 & 98.333 \\
 \bottomrule
 \end{tabular}
 \end{center}
-\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Tips}
+Tip 1 - calculate mean in terms of sex
+\begin{enumerate}
+  \item{Classic}
+\begin{knitrout}\scriptsize
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{with}\hlstd{(my.df,} \hlkwd{mean}\hlstd{(pitch[sex}\hlopt{==}\hlstr{'female'}\hlstd{]))}
+\end{alltt}
+\begin{verbatim}
+## [1] 226.3333
+\end{verbatim}
+\begin{alltt}
+\hlkwd{with}\hlstd{(my.df,} \hlkwd{mean}\hlstd{(pitch[sex}\hlopt{==}\hlstr{'male'}\hlstd{]))}
+\end{alltt}
+\begin{verbatim}
+## [1] 128
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+  
+  \item{Using \texttt{dplyr}}
+\begin{knitrout}\scriptsize
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{library}\hlstd{(dplyr)}
+\hlstd{my.df} \hlopt{%>%}
+  \hlkwd{group_by}\hlstd{(sex)} \hlopt{%>%}
+  \hlkwd{summarise}\hlstd{(}\hlkwc{mean}\hlstd{=}\hlkwd{mean}\hlstd{(pitch))}
+\end{alltt}
+\begin{verbatim}
+## # A tibble: 2 x 2
+##      sex     mean
+##   <fctr>    <dbl>
+## 1 female 226.3333
+## 2   male 128.0000
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+  
+\end{enumerate}
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{output}
+\frametitle{Output}
 Graphical interpretation
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-9-1} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-10-1} 
 
 \end{knitrout}
 \end{frame}
 \begin{frame}
-\frametitle{output}
+\frametitle{Output}
 Secret of Intercept: Why did the model choose females to be the intercept?
 \pause
 
@@ -499,6 +527,44 @@ $\because$ \texttt{lm()} function simply takes whatever comes first in \alert{al
 ``f'' comes before ``m''
 
 \end{frame}
+
+\begin{frame}[fragile]{Tips}
+Tip 2 - How to change order of coefficients' level
+\begin{knitrout}\scriptsize
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{my.df}\hlopt{$}\hlstd{sex} \hlkwb{=} \hlkwd{factor}\hlstd{(my.df}\hlopt{$}\hlstd{sex,} \hlkwc{levels}\hlstd{=}\hlkwd{c}\hlstd{(}\hlstr{"male"}\hlstd{,} \hlstr{"female"}\hlstd{))}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+\begin{itemize}
+\item Before (order: female-male)
+
+\begin{knitrout}\scriptsize
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+##              Estimate Std. Error   t value     Pr(>|t|)
+## (Intercept) 226.33333   10.18441 22.223508 2.426952e-05
+## sexmale     -98.33333   14.40293 -6.827314 2.406892e-03
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\vspace{9pt}
+
+\item After (order: male-female)
+
+\begin{knitrout}\scriptsize
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+##              Estimate Std. Error   t value     Pr(>|t|)
+## (Intercept) 128.00000   10.18441 12.568228 0.0002306453
+## sexfemale    98.33333   14.40293  6.827314 0.0024068918
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\end{itemize}
+\end{frame}
+
 
 \section[Exercise2]{Exercise 2: Pitch $\sim$ Age}
 \subsection[Ex2]{Exercise2}
@@ -527,7 +593,7 @@ Subject & Age & Pitch(Hz) \\
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{output}
+\frametitle{Output}
 \begin{knitrout}\tiny
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
@@ -561,8 +627,22 @@ Subject & Age & Pitch(Hz) \\
 \end{knitrout}
 \end{frame}
 
+\begin{frame}[fragile]{Output}
+Graphical interpretation for goodness of fit
+\begin{itemize}
+\item Adjusted R-squared ($R^2_{adj}$) = 0.867158
+\end{itemize}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-17-1} 
+
+\end{knitrout}
+
+\end{frame}
+
 \begin{frame}[fragile]
-\frametitle{output}
+\frametitle{Output}
 Coefficient table
 \begin{knitrout}\scriptsize
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -587,18 +667,17 @@ Coefficient table
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{output}
+\frametitle{Output}
 Graphical interpretation
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-12-1} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-19-1} 
 
 \end{knitrout}
-
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{output}
+\frametitle{Output}
 Meaningful and meaningless intercepts
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -625,31 +704,88 @@ Meaningful and meaningless intercepts
 \end{itemize}
 \end{frame}
 
-\begin{frame}
-\frametitle{Going on}
+\begin{frame}[fragile]{Tips}
+Tip 3 - Manipulating data frame and add to a new column
+
+\begin{enumerate}
+\item Classic
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{my.df}\hlopt{$}\hlstd{age.c} \hlkwb{=} \hlstd{my.df}\hlopt{$}\hlstd{age} \hlopt{-} \hlkwd{mean}\hlstd{(my.df}\hlopt{$}\hlstd{age)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+\item Using \texttt{dplyr}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{my.df} \hlopt{%>%}
+  \hlkwd{mutate}\hlstd{(}\hlkwc{age.c} \hlstd{= age}\hlopt{-}\hlkwd{mean}\hlstd{(age))}
+\end{alltt}
+\begin{verbatim}
+##   age pitch      age.c
+## 1  14   252 -25.833333
+## 2  23   244 -16.833333
+## 3  35   240  -4.833333
+## 4  48   233   8.166667
+## 5  52   212  12.166667
+## 6  67   204  27.166667
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\end{enumerate}
+
+\end{frame}
+
+\begin{frame}{Multiple regression}
 Scaling up
 \begin{itemize}
 \item What if we measured two factors, such as age and sex?
 \item Multiple regression
 	\begin{itemize}
-	\item one response variable as a function of multiple predictor variables
-	\item linear model is just another word for multiple regression
+	\item a function of multiple predictor variables
+  \begin{displaymath}
+  pitch \sim sex + age + \epsilon
+  \end{displaymath}
 	\end{itemize}
-\item formula
-\begin{displaymath}
-pitch \sim sex + age + \epsilon
-\end{displaymath}
 \item But, same interpretation
-\item The p-value at the bottom of the output
-	\begin{itemize}
-	\item p-value for the \alert{overall model}
-	\item p-value considers how well all of your fixed effects together help in accounting for variation in pitch
-	\end{itemize}
-\item The coefficient output
-	\begin{itemize}
-	\item p-value for the individual fixed effects
-	\end{itemize}
+\begin{itemize}
+  \item Significance of overall model
+  \item Significance of each coefficient
 \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Multiple regression}
+Example
+
+\begin{knitrout}\scriptsize
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = pitch ~ sex + age, data = my.df)
+## 
+## Residuals:
+##       1       2       3       4       5       6 
+##  -2.218  -7.103   9.321  13.846 -11.769  -2.077 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)  202.2179    13.1658  15.359 0.000599 ***
+## sexmale     -100.6603    10.3476  -9.728 0.002307 ** 
+## age            0.6346     0.2887   2.198 0.115376    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 12.61 on 3 degrees of freedom
+## Multiple R-squared:  0.9697,	Adjusted R-squared:  0.9495 
+## F-statistic: 48.05 on 2 and 3 DF,  p-value: 0.005268
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
 \end{frame}
 
 \begin{frame}
@@ -699,7 +835,7 @@ Residuals
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-15-1} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-26-1} 
 
 \end{knitrout}
 \end{frame}
@@ -838,7 +974,7 @@ How to check whether homoscedasticity assumption were met?
 \end{itemize}
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-16-1} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-27-1} 
 
 \end{knitrout}
 

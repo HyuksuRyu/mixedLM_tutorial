@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6300 64-bit) (preloaded format=pdflatex 2017.10.7)  14 OCT 2017 12:26
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6300 64-bit) (preloaded format=pdflatex 2017.10.7)  19 OCT 2017 08:06
 entering extended mode
 **./tutorial_LM.tex
 (tutorial_LM.tex
@@ -927,14 +927,14 @@ LaTeX Info: Redefining \includegraphics on input line 107.
 ABD: EverySelectfont initializing macros
 LaTeX Info: Redefining \selectfont on input line 107.
  (tutorial_LM.nav)
-<../../Naver_logo.pdf, id=136, 324.03058pt x 60.1447pt>
+<../../Naver_logo.pdf, id=140, 324.03058pt x 60.1447pt>
 File: ../../Naver_logo.pdf Graphic file (type pdf)
 
 <use ../../Naver_logo.pdf>
 Package pdftex.def Info: ../../Naver_logo.pdf used on input line 112.
 (pdftex.def)             Requested size: 61.31429pt x 11.38092pt.
 
-<../../Naver_clova_logo.pdf, id=137, 644.4075pt x 145.54375pt>
+<../../Naver_clova_logo.pdf, id=141, 644.4075pt x 145.54375pt>
 File: ../../Naver_clova_logo.pdf Graphic file (type pdf)
 
 <use ../../Naver_clova_logo.pdf>
@@ -974,14 +974,14 @@ thkerncmss.
 ] (tutorial_LM.toc) [3
 
 ]
-LaTeX Font Info:    Try loading font information for OMS+cmss on input line 136
+LaTeX Font Info:    Try loading font information for OMS+cmss on input line 142
 .
-LaTeX Font Info:    No file OMScmss.fd. on input line 136.
+LaTeX Font Info:    No file OMScmss.fd. on input line 142.
 
 
 LaTeX Font Warning: Font shape `OMS/cmss/bx/n' undefined
 (Font)              using `OMS/cmsy/m/n' instead
-(Font)              for symbol `textbullet' on input line 136.
+(Font)              for symbol `textbullet' on input line 142.
 
 [4
 
@@ -1011,15 +1011,15 @@ LaTeX Font Warning: Font shape `OMS/cmss/bx/n' undefined
 ]
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 265.
+(hyperref)                removing `math shift' on input line 270.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\sim' on input line 265.
+(hyperref)                removing `\sim' on input line 270.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 265.
+(hyperref)                removing `math shift' on input line 270.
 
 (tutorial_LM.toc) [13
 
@@ -1039,65 +1039,70 @@ LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <10.95> not available
 
 (tutorial_LM.vrb) [16
 
-] (tutorial_LM.vrb) [17
+]
+\openout4 = `tutorial_LM.vrb'.
+
+ (tutorial_LM.vrb) [17
 
 ]
 \openout4 = `tutorial_LM.vrb'.
 
  (tutorial_LM.vrb) [18
 
+] [19
+
 ]
-\openout4 = `tutorial_LM.vrb'.
-
-
-(tutorial_LM.vrb) [19
-
-] [20
+[20
 
 ] [21
 
-] [22
-
 ]
 \openout4 = `tutorial_LM.vrb'.
 
- (tutorial_LM.vrb) [23
-
-]
-\openout4 = `tutorial_LM.vrb'.
-
- (tutorial_LM.vrb)
-[24
+ (tutorial_LM.vrb) [22
 
 ]
 \openout4 = `tutorial_LM.vrb'.
 
  (tutorial_LM.vrb
-<figure/unnamed-chunk-9-1.pdf, id=2112, 505.89pt x 325.215pt>
-File: figure/unnamed-chunk-9-1.pdf Graphic file (type pdf)
+LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <8> not available
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 8.
+) [23
 
-<use figure/unnamed-chunk-9-1.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-9-1.pdf used on input line 5.
+]
+\openout4 = `tutorial_LM.vrb'.
+
+ (tutorial_LM.vrb
+<figure/unnamed-chunk-10-1.pdf, id=2136, 505.89pt x 325.215pt>
+File: figure/unnamed-chunk-10-1.pdf Graphic file (type pdf)
+
+<use figure/unnamed-chunk-10-1.pdf>
+Package pdftex.def Info: figure/unnamed-chunk-10-1.pdf used on input line 5.
 (pdftex.def)             Requested size: 307.28987pt x 197.54718pt.
-) [25
+) [24
 
- <./figure/unnamed-chunk-9-1.pdf>]
-[26
+ <./figure/unnamed-chunk-10-1.pdf>]
+[25
 
-] [27
+] [26
+
+]
+\openout4 = `tutorial_LM.vrb'.
+
+ (tutorial_LM.vrb) [27
 
 ]
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 503.
+(hyperref)                removing `math shift' on input line 569.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\sim' on input line 503.
+(hyperref)                removing `\sim' on input line 569.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 503.
+(hyperref)                removing `math shift' on input line 569.
 
 (tutorial_LM.toc) [28
 
@@ -1118,170 +1123,193 @@ LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <6> not available
 \openout4 = `tutorial_LM.vrb'.
 
 
-(tutorial_LM.vrb) [31
+(tutorial_LM.vrb
+<figure/unnamed-chunk-17-1.pdf, id=2709, 505.89pt x 325.215pt>
+File: figure/unnamed-chunk-17-1.pdf Graphic file (type pdf)
+
+<use figure/unnamed-chunk-17-1.pdf>
+Package pdftex.def Info: figure/unnamed-chunk-17-1.pdf used on input line 9.
+(pdftex.def)             Requested size: 307.28987pt x 197.54718pt.
+)
+Overfull \vbox (13.22733pt too high) detected at line 642
+ []
+
+[31
+
+ <./figure/unnamed-chunk-17-1.pdf>]
+\openout4 = `tutorial_LM.vrb'.
+
+ (tutorial_LM.vrb) [32
 
 ]
 \openout4 = `tutorial_LM.vrb'.
 
  (tutorial_LM.vrb
-<figure/unnamed-chunk-12-1.pdf, id=2657, 505.89pt x 361.35pt>
-File: figure/unnamed-chunk-12-1.pdf Graphic file (type pdf)
+<figure/unnamed-chunk-19-1.pdf, id=2876, 505.89pt x 361.35pt>
+File: figure/unnamed-chunk-19-1.pdf Graphic file (type pdf)
 
-<use figure/unnamed-chunk-12-1.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-12-1.pdf used on input line 5.
+<use figure/unnamed-chunk-19-1.pdf>
+Package pdftex.def Info: figure/unnamed-chunk-19-1.pdf used on input line 5.
 (pdftex.def)             Requested size: 307.28987pt x 219.49687pt.
 )
-Overfull \vbox (17.81677pt too high) detected at line 598
+Overfull \vbox (17.81677pt too high) detected at line 677
  []
 
-[32
+[33
 
- <./figure/unnamed-chunk-12-1.pdf>]
+ <./figure/unnamed-chunk-19-1.pdf>]
 \openout4 = `tutorial_LM.vrb'.
 
- (tutorial_LM.vrb) [33
-
-] [34
-
-] [35
+ (tutorial_LM.vrb) [34
 
 ]
-(tutorial_LM.toc) [36
+\openout4 = `tutorial_LM.vrb'.
 
-] [37
+ (tutorial_LM.vrb) [35
+
+] [36
+
+]
+\openout4 = `tutorial_LM.vrb'.
+
+ (tutorial_LM.vrb) [37
 
 ] [38
 
-] [39
+] (tutorial_LM.toc) [39
 
 ] [40
+
+] [41
+
+]
+[42
+
+] [43
 
 ]
 \openout4 = `tutorial_LM.vrb'.
 
  (tutorial_LM.vrb
-<figure/unnamed-chunk-15-1.pdf, id=3356, 505.89pt x 310.15875pt>
-File: figure/unnamed-chunk-15-1.pdf Graphic file (type pdf)
+<figure/unnamed-chunk-26-1.pdf, id=3772, 505.89pt x 310.15875pt>
+File: figure/unnamed-chunk-26-1.pdf Graphic file (type pdf)
 
-<use figure/unnamed-chunk-15-1.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-15-1.pdf used on input line 10.
+<use figure/unnamed-chunk-26-1.pdf>
+Package pdftex.def Info: figure/unnamed-chunk-26-1.pdf used on input line 10.
 (pdftex.def)             Requested size: 307.28987pt x 188.40147pt.
 )
-Overfull \vbox (28.5214pt too high) detected at line 705
+Overfull \vbox (28.5214pt too high) detected at line 841
  []
 
-[41
+[44
 
- <./figure/unnamed-chunk-15-1.pdf>]
+ <./figure/unnamed-chunk-26-1.pdf>]
 \openout4 = `tutorial_LM.vrb'.
 
  (tutorial_LM.vrb
 LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <9> not available
 (Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 9.
 
-<figure/residual_plot-1.pdf, id=3438, 505.89pt x 310.15875pt>
+<figure/residual_plot-1.pdf, id=3858, 505.89pt x 310.15875pt>
 File: figure/residual_plot-1.pdf Graphic file (type pdf)
 
 <use figure/residual_plot-1.pdf>
 Package pdftex.def Info: figure/residual_plot-1.pdf used on input line 13.
 (pdftex.def)             Requested size: 285.38982pt x 174.97499pt.
 )
-Overfull \vbox (17.01573pt too high) detected at line 725
- []
-
-[42
-
- <./figure/residual_plot-1.pdf>]
-<figure/fig1.png, id=3521, 359.3425pt x 250.9375pt>
-File: figure/fig1.png Graphic file (type png)
- <use figure/fig1.png>
-Package pdftex.def Info: figure/fig1.png used on input line 741.
-(pdftex.def)             Requested size: 143.73445pt x 100.37321pt.
-
-[43
-
- <./figure/fig1.png>]
-File: figure/fig1.png Graphic file (type png)
- <use figure/fig1.png>
-Package pdftex.def Info: figure/fig1.png used on input line 741.
-(pdftex.def)             Requested size: 143.73445pt x 100.37321pt.
- [44
-
-]
-<figure/stripe.pdf, id=3678, 617.30624pt x 303.1325pt>
-File: figure/stripe.pdf Graphic file (type pdf)
- <use figure/stripe.pdf>
-Package pdftex.def Info: figure/stripe.pdf used on input line 759.
-(pdftex.def)             Requested size: 185.1933pt x 90.94044pt.
-
-Overfull \vbox (5.76038pt too high) detected at line 759
+Overfull \vbox (17.01573pt too high) detected at line 861
  []
 
 [45
 
- <./figure/stripe.pdf>] [46
+ <./figure/residual_plot-1.pdf>]
+<figure/fig1.png, id=3945, 359.3425pt x 250.9375pt>
+File: figure/fig1.png Graphic file (type png)
+ <use figure/fig1.png>
+Package pdftex.def Info: figure/fig1.png used on input line 877.
+(pdftex.def)             Requested size: 143.73445pt x 100.37321pt.
 
-] [47
+[46
 
-] [48
-
-] [49
+ <./figure/fig1.png>]
+File: figure/fig1.png Graphic file (type png)
+ <use figure/fig1.png>
+Package pdftex.def Info: figure/fig1.png used on input line 877.
+(pdftex.def)             Requested size: 143.73445pt x 100.37321pt.
+ [47
 
 ]
-<figure/unnamed-chunk-16-1.pdf, id=4065, 505.89pt x 289.08pt>
-File: figure/unnamed-chunk-16-1.pdf Graphic file (type pdf)
+<figure/stripe.pdf, id=4109, 617.30624pt x 303.1325pt>
+File: figure/stripe.pdf Graphic file (type pdf)
+ <use figure/stripe.pdf>
+Package pdftex.def Info: figure/stripe.pdf used on input line 895.
+(pdftex.def)             Requested size: 185.1933pt x 90.94044pt.
 
-<use figure/unnamed-chunk-16-1.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-16-1.pdf used on input line 845.
-(pdftex.def)             Requested size: 307.28987pt x 175.59749pt.
-
-Overfull \vbox (29.31741pt too high) detected at line 845
+Overfull \vbox (5.76038pt too high) detected at line 895
  []
 
-[50
+[48
 
- <./figure/unnamed-chunk-16-1.pdf>]
-<figure/fig2.png, id=4147, 513.92pt x 423.5825pt>
-File: figure/fig2.png Graphic file (type png)
- <use figure/fig2.png>
-Package pdftex.def Info: figure/fig2.png used on input line 862.
-(pdftex.def)             Requested size: 128.47968pt x 105.89536pt.
+ <./figure/stripe.pdf>] [49
 
-[51
+] [50
 
- <./figure/fig2.png>]
-LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <8> not available
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 893.
- [52
+] [51
+
+] [52
 
 ]
-<figure/fig3.png, id=4301, 842.14626pt x 424.58624pt>
-File: figure/fig3.png Graphic file (type png)
- <use figure/fig3.png>
-Package pdftex.def Info: figure/fig3.png used on input line 910.
-(pdftex.def)             Requested size: 168.42627pt x 84.91574pt.
+<figure/unnamed-chunk-27-1.pdf, id=4516, 505.89pt x 289.08pt>
+File: figure/unnamed-chunk-27-1.pdf Graphic file (type pdf)
+
+<use figure/unnamed-chunk-27-1.pdf>
+Package pdftex.def Info: figure/unnamed-chunk-27-1.pdf used on input line 981.
+(pdftex.def)             Requested size: 307.28987pt x 175.59749pt.
+
+Overfull \vbox (29.31741pt too high) detected at line 981
+ []
 
 [53
 
- <./figure/fig3.png>] [54
+ <./figure/unnamed-chunk-27-1.pdf>]
+<figure/fig2.png, id=4602, 513.92pt x 423.5825pt>
+File: figure/fig2.png Graphic file (type png)
+ <use figure/fig2.png>
+Package pdftex.def Info: figure/fig2.png used on input line 998.
+(pdftex.def)             Requested size: 128.47968pt x 105.89536pt.
+
+[54
+
+ <./figure/fig2.png>] [55
+
+]
+<figure/fig3.png, id=4765, 842.14626pt x 424.58624pt>
+File: figure/fig3.png Graphic file (type png)
+ <use figure/fig3.png>
+Package pdftex.def Info: figure/fig3.png used on input line 1046.
+(pdftex.def)             Requested size: 168.42627pt x 84.91574pt.
+
+[56
+
+ <./figure/fig3.png>] [57
 
 ]
 \openout4 = `tutorial_LM.vrb'.
 
- (tutorial_LM.vrb) [55
-
-] [56
-
-] [57
-
-] [58
+ (tutorial_LM.vrb) [58
 
 ] [59
 
-]
-[60
+] [60
 
 ] [61
+
+] [62
+
+]
+[63
+
+] [64
 
 ]
 \tf@nav=\write7
@@ -1293,14 +1321,14 @@ Package pdftex.def Info: figure/fig3.png used on input line 910.
 \tf@snm=\write9
 \openout9 = `tutorial_LM.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1024.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1024.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1160.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1160.
  (tutorial_LM.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1024.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1024.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1160.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1160.
 
 Package rerunfilecheck Info: File `tutorial_LM.out' has not changed.
-(rerunfilecheck)             Checksum: 73EB289B6C83F6FC32B88B537EAC8911;999.
+(rerunfilecheck)             Checksum: A0AB7DF35AF8C981E6A8C2F2EFA6D6BD;999.
 
 
 LaTeX Font Warning: Size substitutions with differences
@@ -1311,10 +1339,10 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
  ) 
 Here is how much of TeX's memory you used:
- 18117 strings out of 493328
- 342062 string characters out of 3139124
- 458052 words of memory out of 3000000
- 21000 multiletter control sequences out of 15000+200000
+ 18142 strings out of 493328
+ 342443 string characters out of 3139124
+ 462708 words of memory out of 3000000
+ 21012 multiletter control sequences out of 15000+200000
  18359 words of font info for 68 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  56i,20n,55p,943b,746s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -1330,9 +1358,9 @@ cmsy9.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pf
 b><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt8.pfb><C:/Pro
 gram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt9.pfb><C:/Program File
 s/MiKTeX 2.9/fonts/type1/public/amsfonts/symbols/msam10.pfb>
-Output written on tutorial_LM.pdf (61 pages, 1942639 bytes).
+Output written on tutorial_LM.pdf (64 pages, 2047004 bytes).
 PDF statistics:
- 5064 PDF objects out of 5155 (max. 8388607)
- 139 named destinations out of 1000 (max. 500000)
- 250 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 5565 PDF objects out of 6186 (max. 8388607)
+ 145 named destinations out of 1000 (max. 500000)
+ 255 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -485,6 +485,19 @@ summary(xmdl)
 @
 \end{frame}
 
+\begin{frame}[fragile]{Output}
+Graphical interpretation for goodness of fit
+\begin{itemize}
+\item Adjusted R-squared ($R^2_{adj}$) = \Sexpr{summary(xmdl)$adj.r.squared}
+\end{itemize}
+
+<<echo=FALSE, fig.height=4.5>>=
+plot(pitch ~ fitted(xmdl), my.df, xlab='Fitted value')
+abline(a=0, b=1, lty=3)
+@
+
+\end{frame}
+
 \begin{frame}[fragile]
 \frametitle{Output}
 Coefficient table
@@ -634,8 +647,11 @@ Residuals
 \end{itemize}
 
 <<echo=FALSE,fig.height=4.3>>=
-xmdl = lm(pitch~age,my.df)
-plot(pitch~age,my.df, pch=19, xlim = c(-2,82), ylim = c(175, 285))
+age = c(14,23,35,48,52,67)
+pitch = c(252,244,240,233,212,204)
+my.df = data.frame(age, pitch)
+xmdl = lm(pitch~age, my.df)
+plot(pitch~age,my.df, pch=19, xlim = c(-2,82), ylim = c(175, 265))
 abline(xmdl, lty='dashed')
 for(i in 1:dim(my.df)[1]){
 	with(my.df,lines(x=c(age[i],age[i]),y=c(pitch[i],xmdl$fitted.values[i]),col='red',lwd=1.5))
