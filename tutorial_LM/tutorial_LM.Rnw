@@ -86,6 +86,12 @@ Citation
 \begin{itemize}
   \item Winter, B. (2013). Linear models and linear mixed effects models in R with linguistic applications. arXiv:1308.5499. 
 \end{itemize}
+
+\vspace{9pt}
+How to download this tutorial
+\begin{itemize}
+  \item \href{https://github.com/HyuksuRyu/mixedLM_tutorial}{github page} \url{https://github.com/HyuksuRyu/mixedLM_tutorial}
+\end{itemize}
 \end{frame}
 
 
@@ -183,13 +189,12 @@ Basic idea
 	\end{itemize}
 \item LEFT: \texttt{pitch}
 	\begin{itemize}
-	\item dependent variable
+	\item response (dependent) variable
 	\item the thing you measure
 	\end{itemize}
 \item RIGHT: \texttt{sex}
 	\begin{itemize}
-	\item independent variable
-	\item explanatory variable
+	\item explanaatory (independent) variable
 	\item predictor
 	\end{itemize}
 \end{itemize}
@@ -237,15 +242,14 @@ my.df
 \frametitle{Exercise}
 \begin{itemize}
 \item \texttt{lm()}
+<<>>=
+xmdl = lm(pitch ~ sex, my.df)
+@
 	\begin{itemize}
 	\item Generate the linear model
 	\item Note that we omit the ``$\epsilon$'' term 
 	\item we saved the model into an object \texttt{xmdl}
 	\end{itemize}
-\pause
-<<>>=
-xmdl = lm(pitch ~ sex, my.df)
-@
 \end{itemize}
 \end{frame}
 
@@ -295,13 +299,10 @@ Multiple R-Squared
 \item $R^2$ 
 	\begin{itemize}
 	\item variance explained
-	\item variance accounted for
 	\item 0.921 (quite high) means 92.1\% of the stuff is ``explained'' by our model
 	\end{itemize}
 \item In this case, we have only one independent variable (the fixed effect ``sex''),
 \item $R^2$ reflects how much variance in our data is accounted for by \alert{differences b/w males and females}
-\item In general, b/c $R^2$ value depends on how messy or complex the system is
-\item frequently deal with much lower $R^2$ values. 
 \end{itemize}
 \end{frame}
 
@@ -321,44 +322,35 @@ Multiple R-Squared and Adjusted R-squared
 Meaning of p-value in the F-statistics
 \begin{itemize}
 \item \textbf{conditional probability}
-\item a probability \textit{under the condition that the $H_0$ is true}
-\item $H_0$: sex has no effect on pitch
-\item ``statistically significant'' when the conditional probability is lower than a threshold, adn the alternative hypothesis ($H_1$) is more likely.
+  \begin{itemize}
+    \item a probability \textit{under the condition that the $H_0$ is true}
+  \end{itemize}
+\item $H_0$: Explanary variables (\textit{sex}) have no effect on the response (\textit{pitch})
+\item ``statistically significant'' when the conditional probability is lower than a threshold, and the alternative hypothesis ($H_1$) is more likely.
 \item Report
 	\begin{itemize}
-	\item ``We constructed a linear model of pitch as a function of sex. This model was significnat (F(1,4)=46.61, p$>$0.01).''
+	\item ``We constructed a linear model of pitch as a function of sex. This model was significnat (F(1,4)=46.61, p$<$0.01).''
 	\end{itemize}
 
-\vspace{9pt}
+\item Significance of the overall model 
 \item How to distinguish b/w the significance of the overall model (considering all effects together) from the p-value of individual coefficients? $\rightarrow$ to be continue
 \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{output}
+\frametitle{Output}
 Coefficients table
+\begin{itemize}
+\item Significance of the individual coefficients
 <<echo=FALSE, size='scriptsize'>>=
 coef(summary(xmdl))
 @
-\begin{itemize}
-\item Compare p-value for the overall model and that on the right-hand side of the coefficients table
-\item Same b/c the model had only one fixed effect
-\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]
-\frametitle{output}
-Coefficients table
-<<echo=FALSE, size='scriptsize'>>=
-coef(summary(xmdl))
-@
-\begin{itemize}
 \item Why \texttt{sexmale}, rather than just \texttt{sex}?
-	\begin{itemize}
 	\item Estimate of \texttt{intercept}: mean of pitch of female 
 	\item Estimate of \texttt{sexmale}: difference of pitch b/w female and male
-	\item $\therefore$ pitch of male = Estimate of \texttt{intercept} + Estimate of \texttt{sexmale}
-	\end{itemize}
+	
+$\therefore$ Pitch(male) = \texttt{intercept} + \texttt{sexmale}
+\end{itemize}
 
 \vspace{9pt}
 \begin{center}
@@ -371,25 +363,48 @@ mean & \Sexpr{round(with(my.df,mean(pitch[sex=='female'])),3)} & \Sexpr{with(my.
 \bottomrule
 \end{tabular}
 \end{center}
-\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Tips}
+Tip 1 - calculate mean in terms of sex
+\begin{enumerate}
+  \item{Classic}
+<<size='scriptsize'>>=
+with(my.df, mean(pitch[sex=='female']))
+with(my.df, mean(pitch[sex=='male']))
+@
+  
+  \item{Using \texttt{dplyr}}
+<<size='scriptsize', message=FALSE>>=
+library(dplyr)
+my.df %>%
+  group_by(sex) %>%
+  summarise(mean=mean(pitch))
+@
+  
+\end{enumerate}
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{output}
+\frametitle{Output}
 Graphical interpretation
-<<echo=FALSE, fig.height=4.5>>=
-xyplot(pitch~sex, data=my.df, col='black',ylim=c(-10,310),
-	panel=function(x,y){
-		panel.xyplot(x,y, col='black',pch=19)
-		panel.abline(a=226.83+98.33, b=-98.33)
-		panel.abline(h=226.83, lty='dotted')
-		panel.abline(v=1, lty='dotted')
-		panel.arrows(x0=2, y0=226.83, x1=2,y1=226.83-98.33)
-	})
+<<echo=FALSE, message=FALSE, fig.height=4.5>>=
+library(ggplot2)
+ggplot(my.df, aes(x=sex, y=pitch)) + 
+  geom_point(aes(colour=sex), size=2) + 
+  #coord_cartesian(ylim=c(100, 300)) + 
+  geom_abline(slope=-98.33, intercept=226.83+98.33) + 
+  geom_hline(yintercept=226.83, linetype="dashed") + 
+  geom_vline(xintercept=1, linetype="dashed") + 
+  geom_hline(yintercept=226.83-98.33, linetype="dashed") + 
+  geom_segment(aes(x=2, y=226.83, xend=2, yend=226.83-98.33), arrow=arrow(length = unit(1, "cm"))) + 
+  annotate('text', x=1.9, y=226.83-98.33- 4, label=round(with(my.df, mean(pitch[sex=='male'])),3)) +
+  annotate('text', x=2.15, y=226.83-(98.33/2), label=round(with(my.df, mean(pitch[sex=='male'])-mean(pitch[sex=='female'])),3)) +
+  annotate('text', x=0.85, y=226.83 - 4, label=round(with(my.df, mean(pitch[sex=='female'])),3))
 @
 \end{frame}
 \begin{frame}
-\frametitle{output}
+\frametitle{Output}
 Secret of Intercept: Why did the model choose females to be the intercept?
 \pause
 
@@ -399,6 +414,39 @@ $\because$ \texttt{lm()} function simply takes whatever comes first in \alert{al
 ``f'' comes before ``m''
 
 \end{frame}
+
+\begin{frame}[fragile]{Tips}
+Tip 2 - How to change order of coefficients' level
+<<size='scriptsize'>>=
+my.df$sex = factor(my.df$sex, levels=c("male", "female"))
+@
+\begin{itemize}
+\item Before (order: female-male)
+<<include=FALSE>>=
+pitch = c(233,204,242,130,112,142)
+sex = c(rep("female",3),rep("male",3))
+my.df = data.frame(sex, pitch)
+xmdl = lm(pitch ~ sex, data=my.df)
+@
+<<size='scriptsize', echo=FALSE>>=
+summary(xmdl)$coefficient
+@
+\vspace{9pt}
+
+\item After (order: male-female)
+<<include=FALSE>>=
+pitch = c(233,204,242,130,112,142)
+sex = c(rep("female",3),rep("male",3))
+my.df = data.frame(sex, pitch)
+my.df$sex = factor(my.df$sex, levels=c("male", "female"))
+xmdl = lm(pitch ~ sex, data=my.df)
+@
+<<size='scriptsize', echo=FALSE>>=
+summary(xmdl)$coefficient
+@
+\end{itemize}
+\end{frame}
+
 
 \section[Exercise2]{Exercise 2: Pitch $\sim$ Age}
 \subsection[Ex2]{Exercise2}
@@ -427,7 +475,7 @@ Subject & Age & Pitch(Hz) \\
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{output}
+\frametitle{Output}
 <<size='tiny'>>=
 age = c(14,23,35,48,52,67)
 pitch = c(252,244,240,233,212,204)
@@ -438,7 +486,7 @@ summary(xmdl)
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{output}
+\frametitle{Output}
 Coefficient table
 <<echo=FALSE, size='scriptsize'>>=
 summary(xmdl)$coefficients
@@ -457,12 +505,11 @@ summary(xmdl)$coefficients
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{output}
+\frametitle{Output}
 Graphical interpretation
 <<echo=FALSE,fig.height=5>>=
 plot(pitch~age, data=my.df, pch=19, xlim=c(-5,90), ylim=c(175,290))
 abline(xmdl)
-#abline(h=267.0765, lty='dashed')
 lines(x=c(0,0), y=c(0,267.0765), lty='dashed')
 for(i in seq(10,80,by=10)){
 	lines(x=c(i,i),y=c(0,267.0765-i*0.9099), lty='dashed')
@@ -470,11 +517,10 @@ for(i in seq(10,80,by=10)){
 	arrows(x0=i, y0=267.0765-(i-10)*0.9099,x1=i,y1=267.0765-i*0.9099, length=0.1)
 }
 @
-
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{output}
+\frametitle{Output}
 Meaningful and meaningless intercepts
 <<>>=
 my.df$age.c = my.df$age - mean(my.df$age)
@@ -491,31 +537,55 @@ summary(xmdl)$coefficients
 \end{itemize}
 \end{frame}
 
-\begin{frame}
-\frametitle{Going on}
+\begin{frame}[fragile]{Tips}
+Tip 3 - Manipulating data frame and add to a new column
+
+\begin{enumerate}
+\item Classic
+<<>>=
+my.df$age.c = my.df$age - mean(my.df$age)
+@
+\item Using \texttt{dplyr}
+<<>>=
+my.df %>% 
+  mutate(age.c = age-mean(age))
+@
+\end{enumerate}
+
+\end{frame}
+
+\begin{frame}{Multiple regression}
 Scaling up
 \begin{itemize}
 \item What if we measured two factors, such as age and sex?
 \item Multiple regression
 	\begin{itemize}
-	\item one response variable as a function of multiple predictor variables
-	\item linear model is just another word for multiple regression
+	\item a function of multiple predictor variables
+  \begin{displaymath}
+  pitch \sim sex + age + \epsilon
+  \end{displaymath}
 	\end{itemize}
-\item formula
-\begin{displaymath}
-pitch \sim sex + age + \epsilon
-\end{displaymath}
 \item But, same interpretation
-\item The p-value at the bottom of the output
-	\begin{itemize}
-	\item p-value for the \alert{overall model}
-	\item p-value considers how well all of your fixed effects together help in accounting for variation in pitch
-	\end{itemize}
-\item The coefficient output
-	\begin{itemize}
-	\item p-value for the individual fixed effects
-	\end{itemize}
+\begin{itemize}
+  \item Significance of overall model
+  \item Significance of each coefficient
 \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Multiple regression}
+Example
+<<include=FALSE>>=
+pitch = c(233,204,242,130,112,142)
+sex = c(rep("female",3),rep("male",3))
+age = c(52,14,48,23,35,67)
+my.df = data.frame(sex, age, pitch)
+xmdl = lm(pitch ~ sex + age, data=my.df)
+@
+<<size='scriptsize', echo=FALSE>>=
+summary(xmdl)
+@
+
 \end{frame}
 
 \begin{frame}
