@@ -22,6 +22,9 @@ summary(xmdl)
 ## ----echo=FALSE, size='scriptsize'---------------------------------------
 coef(summary(xmdl))
 
+## ----echo=FALSE, size='scriptsize'---------------------------------------
+coef(summary(xmdl))
+
 ## ----echo=FALSE, fig.height=4.5------------------------------------------
 xyplot(pitch~sex, data=my.df, col='black',ylim=c(-10,310),
 	panel=function(x,y){
@@ -78,10 +81,10 @@ plot(rnorm(100),rnorm(100),xlab="Fitted value", ylab="Residuals" )
 abline(h=0, lty="dashed")
 
 ## ----eval=FALSE, size='scriptsize'---------------------------------------
-hist(residuals(xmdl))
+## hist(residuals(xmdl))
 
 ## ----eval=FALSE, size='scriptsize'---------------------------------------
-qqnorm(residuals(xmdl))
+## qqnorm(residuals(xmdl))
 
 ## ----size='scriptsize'---------------------------------------------------
 dfbeta(xmdl)
