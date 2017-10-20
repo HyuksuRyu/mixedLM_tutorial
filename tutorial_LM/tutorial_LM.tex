@@ -868,8 +868,8 @@ Residual plot
 \item residuals - the vertical deviations from the line
 \item \alert{No obvious pattern} in the residuals $\rightarrow$ \textbf{Linear}
 \pause
-\item What if there were a nonlinear or curvy pattern?
-\item this would indicate a violation of the linearity assumption
+\item What if a nonlinear or curvy pattern? $\rightarrow$
+\item a violation of the linearity assumption
 \end{itemize}
 \begin{center}
 \includegraphics[scale=.4]{figure/fig1}
@@ -905,16 +905,16 @@ What is collinearity?
 
 Example
 \begin{itemize}
-\item you were interested in how average talking speed affects intellignece ratings
+\item you were interested in how average talking speed affects intellibility ratings
 \begin{displaymath}
-intelligence\ ratings \sim talking\ speed
+intelligibility\ ratings \sim talking\ speed
 \end{displaymath}
 \item you measured several different indicators of talking speed
 	\begin{itemize}
 	\item syllables/sec, words/sec, sentences/sec
-	\end{itemize}
-\item they are likely to be highly correlated with each other
-\item if you use all of them as predictors within the same model, there will be \textbf{collinearity problem}
+  \item highly correlated with each other
+  \item \textbf{collinearity problem}
+  \end{itemize}
 \end{itemize}
 \end{frame}
 
@@ -923,14 +923,10 @@ intelligence\ ratings \sim talking\ speed
 If there is collinearity
 \begin{itemize}
 \item the interpretation of the model becomes \alert{unstable}
-\item the significance of these correlated or collinear fixed effects is not easily interpretable
+\item stealing the explanatory power
 \begin{itemize}
-\item $\because$ they might steal each other's \alert{explanatory power}
+\item significance $\rightarrow$ meaningless
 \end{itemize}
-\item if multiple predictors are very similar to each other
-	\begin{itemize}
-	\item it becomes very difficult to decide what, in fact, is playing a big role
-	\end{itemize}
 \end{itemize}
 \end{frame}
 
@@ -940,13 +936,13 @@ How to get rid of collinearity?
 \begin{enumerate}
 \item pre-empt the problem in the design stage
 	\begin{itemize}
-	\item focus on a few fixed effects that are not correlated with each other
+	\item focus on a few fixed effects - not correlated with each other
 	\end{itemize}
-\item Or, think about which one is the most meaningful and drop the others
+\item Choose the most meaningful and drop the others
 	\begin{itemize}
 	\item DO NOT base this dropping decision on the \textbf{significance} (circular logic problem)
 	\end{itemize}
-\item Or, consider dimension-reduction techniques such as Principal Component Analysis
+\item Consider dimension-reduction techniques such as \href{https://en.wikipedia.org/wiki/Principal_component_analysis}{Principal Component Analysis}
 	\begin{itemize}
 	\item transform several correlated variables into a smaller set of variables which you can then use as new fixed effects.
 	\end{itemize}
@@ -1004,7 +1000,7 @@ Normality of residuals
 \begin{itemize}
 \item It is the one that is \alert{least important}
 \item LM is relatively robust agains violation of the normality assumption
-\item Gellman and Hill (2007), a famous book on LM and mixed models, DO NOT EVEN RECOMMEND diagnostics of the normality assumption
+\item According to \href{http://book.naver.com/bookdb/book_detail.nhn?bid=2634403}{Gellman and Hill (2007)}, DO NOT EVEN RECOMMEND diagnostics of the normality assumption
 \end{itemize}
 
 If you want to test the assumption
@@ -1089,7 +1085,7 @@ What is the criteria for decision of influential data point
 \item One thing for sure
 	\begin{itemize}
 	\item any value that changes the sign of the slope is \textbf{definitely} an influential point
-	\item be cautious to DFbeta value which is at least half of the absolute value of the slope (To author)
+	\item be cautious to DFbeta value which is at least half of the absolute value of the slope
 	\end{itemize}
 \end{itemize}
 \end{frame}
