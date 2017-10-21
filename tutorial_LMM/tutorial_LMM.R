@@ -1,236 +1,131 @@
-<<<<<<< HEAD
-## ----include=FALSE-------------------------------------------------------
-require(xtable)
-require(lattice)
-require(lme4)
-
-## ----default, echo=FALSE-------------------------------------------------
-politeness= read.csv("http://www.bodowinter.com/tutorial/politeness_data.csv")
-politeness$scenario = factor(politeness$scenario)
-
-## ----box_subject,include=FALSE-------------------------------------------
-with(politeness, plot(frequency~subject, col ='lightgrey'))
-
-## ----box_item,include=FALSE----------------------------------------------
-with(politeness, plot(frequency~scenario, col='lightgrey'))
-
-## ----eval=FALSE----------------------------------------------------------
-## install.packages("lme4") # Linear Mixed Effect Model
-
-## ----eval=FALSE----------------------------------------------------------
-## library(lme4)
-
-## ----size='scriptsize'---------------------------------------------------
-politeness=read.csv("http://www.bodowinter.com/tutorial/politeness_data.csv")
-
-## ----size='scriptsize'---------------------------------------------------
-summary(politeness)
-
-## ----size='scriptsize'---------------------------------------------------
-politeness$scenario = factor(politeness$scenario)
-
-## ----size='scriptsize'---------------------------------------------------
-(idx = which(is.na(politeness$frequency)))
-politeness = politeness[-idx,]
-
-## ----size='scriptsize'---------------------------------------------------
-summary(politeness)
-
-## ----box_freq,include=FALSE----------------------------------------------
-boxplot(frequency ~ attitude*gender,politeness, col = c("white", "lightgrey"))
-
-## ----size='scriptsize'---------------------------------------------------
-politeness.model = lmer(frequency ~ attitude + (1|subject) + 
-	(1|scenario), data=politeness, REML=FALSE)
-
-## ----size='scriptsize', eval=FALSE---------------------------------------
-## summary(politeness.model)
-
-## ----size='scriptsize', echo=FALSE---------------------------------------
-summary(politeness.model)
-
-## ----echo=FALSE, size='scriptsize'---------------------------------------
-summary(politeness.model)$AICtab
-
-## ----echo=FALSE, size='scriptsize'---------------------------------------
-summary(politeness.model)$coefficients
-
-## ----size='scriptsize'---------------------------------------------------
-politeness.model.2 = lmer(frequency ~ attitude + gender + (1|subject) + (1|scenario), data=politeness)
-
-## ----eval=FALSE, size='scriptsize'---------------------------------------
-## summary(politeness.model.2)
-
-## ----echo=FALSE, size='scriptsize'---------------------------------------
-summary(politeness.model.2)
-
-## ----size='scriptsize', echo=FALSE---------------------------------------
-summary(politeness.model.2)$coefficients
-
-## ----size='scriptsize'---------------------------------------------------
-politeness.null = lmer(frequency ~ gender + (1|subject) 
-	+ (1|scenario), data=politeness, REML=FALSE)
-
-## ----size='scriptsize'---------------------------------------------------
-politeness.model = lmer(frequency ~ attitude + gender 
-	+ (1|subject) + (1|scenario), data=politeness, REML=FALSE)
-
-## ----size='scriptsize', eval=FALSE---------------------------------------
-## anova(politeness.null, politeness.model)
-
-## ----size='scriptsize', echo=FALSE---------------------------------------
-anova(politeness.null, politeness.model)
-
-## ----size='scriptsize'---------------------------------------------------
-politeness.model = lmer(frequency ~ attitude + gender + (1+attitude|subject)
-	+ (1+attitude|scenario), data=politeness, REML=FALSE)
-politeness.inter = lmer(frequency ~ attitude * gender + (1+attitude|subject)
-	+ (1+attitude|scenario), data=politeness, REML=FALSE)
-anova(politeness.model, politeness.inter)
-
-## ----size='footnotesize', eval=FALSE-------------------------------------
-## coef(politeness.model)
-
-## ----size='scriptsize', echo=FALSE---------------------------------------
-coef(politeness.model)
-
-## ----size='scriptsize'---------------------------------------------------
-politeness.model = lmer(frequency ~ attitude + gender 
-                        + (1+attitude|subject) + (1+attitude|scenario),
-                        data=politeness, REML=FALSE)
-
-## ----size='footnotesize', eval=FALSE-------------------------------------
-## coef(politeness.model)
-
-## ----size='scriptsize', echo=FALSE---------------------------------------
-coef(politeness.model)
-
-## ----size='scriptsize'---------------------------------------------------
-politeness.model = lmer(frequency ~ attitude + gender 
-                        + (1+attitude|subject)+(1+attitude|scenario), 
-                        data=politeness, REML=FALSE)
-politeness.null = lmer(frequency ~ gender 
-                       + (1+attitude|subject) + (1+attitude|scenario), 
-                       data=politeness, REML = FALSE)
-
-## ----size='scriptsize'---------------------------------------------------
-anova(politeness.null, politeness.model)
-
-## ----eval=FALSE, size='scriptsize'---------------------------------------
-## all.res.attitude = numeric(nrow(politeness))
-## all.res.gender = numeric(nrow(politeness))
-## 
-## for(i in 1:nrow(politeness)){
-##   myfullmodel = lmer(frequency ~ attitude + gender +
-##                        (1+attitude|subject)+(1+attitude|scenario),
-##                    data=politeness[-i,], REML=FALSE)
-##   # 1- intercept, 2-attitude, 3-gender
-##   all.res.attitude[i] = fixef(myfullmodel)[2]
-##   all.res.gender[i] = fixef(myfullmodel)[3] #
-## }
-
-## ----size='scriptsize', echo=FALSE---------------------------------------
-citation()
-
-## ----size='scriptsize'---------------------------------------------------
-citation('lme4')
-
-=======
-require(lme4)
-politeness= read.csv("http://www.bodowinter.com/tutorial/politeness_data.csv")
-politeness$scenario = factor(politeness$scenario)
+library(lme4)
+library(dplyr)
+politeness = read.csv(file.choose()) #./material/politeness_data.csv
+politeness = read.csv("http://www.bodowinter.com/tutorial/politeness_data.csv") #./material/politeness_data.csv
 head(politeness)
-dim(politeness)
-
+politeness$scenario = factor(politeness$scenario)
+# if change order of attitude: polite, informal
+#politeness$attitude = factor(politeness$attitude, levels = c("pol", "inf"))
 summary(politeness)
+#politeness = tbl_df(politeness)
 
-with(politeness, plot(frequency~subject, col ='lightgrey'))
-with(politeness, plot(frequency~scenario, col='lightgrey'))
 
-# check na.rm
-idx = which(is.na(politeness$frequency))
-politeness = politeness[-idx,]
-dim(politeness)
+# Let's see BIG PICTURE
+# mean pitch in terms of subject
+politeness %>% 
+  group_by(subject) %>%
+  summarise(mean=mean(frequency, na.rm=TRUE))
+  # na.rm=TRUE option
+  # there is a row which contains NA
+which(is.na(politeness))
 
-boxplot(frequency ~ attitude*gender,politeness, col = c("white", "lightgrey"))
+# box plot in terms of subject
+with(politeness, boxplot(frequency ~ subject, ylab = 'Frequency(Hz)', xlab ='subject', col='lightgrey'))
 
-lmer(frequency ~ attitude, data=politeness)
+# mean pitch in terms of scenario
+politeness %>% 
+  group_by(scenario) %>%
+  summarise(mean=mean(frequency, na.rm=TRUE))
+# box plot in terms of subject
+with(politeness, boxplot(frequency ~ scenario, ylab = 'Frequency(Hz)', xlab ='scenario', col='lightgrey'))
 
+# mean pitch in terms of attitude and gender
+politeness %>% 
+  group_by(gender, attitude) %>%
+  summarise(mean=mean(frequency, na.rm = TRUE))
+boxplot(frequency ~ attitude * gender, col=c("white", "lightgrey"), politeness)
+
+
+###################
+# mixed modeling  #
+###################
+# w/ fixed effect only
+lmer(frequency ~ attitude, data=politeness) # error! need random effect
+# add random effect
 politeness.model = lmer(frequency ~ attitude + (1|subject) + (1|scenario), data=politeness)
-politeness.model = lmer(frequency ~ attitude + (1|subject) + (1|scenario), data=politeness, REML =FALSE)
-coef(politeness.model)
-str(politeness.model)
+# let's see what the result is
+(politeness.model.summary = summary(politeness.model)) # unlike the tutorial, summary() function is necessary
 
-attributes(summary(politeness.model))
-coefficients(summary(politeness.model))
-summary(politeness.model)$methTitle
-summary(politeness.model)$objClass
-summary(politeness.model)$devcomp
-summary(politeness.model)$isLmer
-summary(politeness.model)$useScale
-summary(politeness.model)$logLik
-summary(politeness.model)$family
-summary(politeness.model)$link
-summary(politeness.model)$ngrps
-summary(politeness.model)$coefficients
-summary(politeness.model)$sigma
-summary(politeness.model)$vcov
-summary(politeness.model)$varcor
-summary(politeness.model)$AICtab
-summary(politeness.model)$call
-summary(politeness.model)$residuals
+# random effect
+politeness.model.summary$varcor
+## std.dev: scenario < subject --> scenario less variation which is confirmed by boxplot
+## residual: variability not due to scenario or subject
+## "random" deviation / some factors that affect pitch outside the purview
 
-summary(politeness.model)
+# fixed effect
+politeness.model.summary$coefficients
+## pitch is lower in polite than in informal speech by approx. 20Hz
+## t-value = Estimate/Std.Error
+# intercept = average frequency in terms of attitude
+politeness %>% 
+  group_by(attitude) %>%
+  summarise(mean(frequency, na.rm=TRUE))
 
+# renewal of the model: add gender b/c relationship b/w sex & pitch - predictable and systematic
+politeness.model = lmer(frequency ~ attitude + gender + (1|subject) + (1|scenario), data = politeness)
+(politeness.model.summary = summary(politeness.model))
+# random effect - focus on residuals
+politeness.model.summary$varcor # std.dev of subject lowered
+# fixed effect
+politeness.model.summary$coefficients
+# Estimate of intercept - much higher : based on informal & "FEMALE"
 
-lm.model = lm(frequency ~ attitude, data=politeness)
-coef(lm.model)
-str(lm.model)
-attributes(lm.model)$names
-
-summary(politeness.model)
-
-summary(politeness)
-with(politeness, mean(frequency[attitude=='inf']))
-## 202.588 Hz
-
-politeness.model = lmer(frequency ~ attitude + gender + (1|subject) + (1|scenario), data=politeness)
-summary(politeness.model)
-
-## Likelihood test
-# comparing attitude
-politeness.null = lmer(frequency ~ gender + (1|subject) + (1|scenario), data=politeness, REML=FALSE)
-politeness.model = lmer(frequency~attitude+gender+(1|subject)+(1|scenario), data=politeness, REML=FALSE)
+#####################
+# Significance test #
+#####################
+# Comparison b/w null and full model
+politeness.null = lmer(frequency ~ gender + (1|subject) + (1|scenario), data = politeness, REML=FALSE)
+politeness.model = lmer(frequency ~ gender + attitude + (1|subject) + (1|scenario), data = politeness, REML=FALSE)
 anova(politeness.null, politeness.model)
-anova(politeness.model, politeness.null)
 
-coef(politeness.model)
+# interaction test
+politeness.interaction = lmer(frequency ~ gender * attitude + (1|subject) + (1|scenario), data = politeness, REML=FALSE)
+anova(politeness.model, politeness.interaction) # no significant inter-dependence
+anova(politeness.model, politeness.interaction, politeness.null)
 
+#######################################
+# Rnadom slopes vs. random intercepts #
+#######################################
+coef(politeness.model) # different intercept - random intercept model
 # random slope model
-politeness.model = lmer(frequency ~ attitude + gender + (1+attitude|subject)+(1+attitude|scenario), data=politeness, REML=FALSE)
-summary(politeness.model)
-coef(politeness.model)
+politeness.model = lmer(frequency ~ attitude + gender +  (1+attitude|subject) + (1+attitude+gender|scenario), 
+                        data=politeness, REML=FALSE)
+coef(politeness.model) # random slope model
 
-politeness.null = lmer(frequency ~ gender + (1+attitude|subject) + (1+attitude|scenario), data=politeness, REML = FALSE)
-summary(politeness.null)
-
+# anova test for random slope model
+politeness.null = lmer(frequency ~ gender +  (1+attitude|subject) + (1+attitude|scenario), 
+                        data=politeness, REML=FALSE) # need to set up identical random factor setting
 anova(politeness.null, politeness.model)
 
-# random slope model - complex
-politeness.model.complex = lmer(frequency ~ attitude + gender + (1+attitude+gender|subject)+(1+attitude+gender|scenario), data=politeness, REML=FALSE)
-summary(politeness.model.complex)
-coef(politeness.model.complex)
 
+###############
+# Assumptions #
+###############
 
-# influential data point for attitude
-all.res = numeric(nrow(politeness))
-for(i in 1:nrow(politeness)){
-  myfullmodel = lmer(frequency ~ attitude + gender + (1+attitude|subject)+(1+attitude|scenario), data=politeness[-i,], REML=FALSE)
-  all.res[i] = fixef(myfullmodel)[1]
+# influential data points
+getDFBeta = function(df, id){
+  all.res = numeric(nrow(df))
+  for(i in 1:nrow(df)){
+    myfullmodel = lmer(frequency ~ gender + attitude + (1+attitude|subject) + (
+      1+attitude|scenario), df[-i, ])
+    all.res[i] = fixef(myfullmodel)[id]
+  }
+  return(all.res)
 }
 
-all.res
+(all.res.attitude = getDFBeta(politeness, 2))
+(all.res.gender = getDFBeta(politeness, 3))
 
-fixef(politeness.model)
+# for all aspects as a data frame
+all.res = data.frame()
+for(i in 1:nrow(politeness)){
+  model.part = lmer(frequency ~ gender + attitude + (1+attitude|subject) + (
+    1+attitude|scenario), politeness[-i, ])
+  all.res[i,1] = fixef(model.part)[1]
+  all.res[i,2] = fixef(model.part)[2]
+  all.res[i,3] = fixef(model.part)[3]
+}
+colnames(all.res) = attributes(fixef(politeness.model))$names
+head(all.res)
 
->>>>>>> c286215cd9ecb56424f605abcea76c595ed63f49
+
