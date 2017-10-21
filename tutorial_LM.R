@@ -10,7 +10,7 @@ my.df
 
 ## building lm
 xmdl = lm(pitch ~ sex, my.df)
-
+xmdl
 summary(xmdl)
 
 coef(summary(xmdl))

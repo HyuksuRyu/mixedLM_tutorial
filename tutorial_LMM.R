@@ -33,7 +33,7 @@ with(politeness, boxplot(frequency ~ scenario, ylab = 'Frequency(Hz)', xlab ='sc
 politeness %>% 
   group_by(gender, attitude) %>%
   summarise(mean=mean(frequency, na.rm = TRUE))
-boxplot(frequency ~ attitude * gender, col=c("white", "lightgrey"), politeness)
+boxplot(frequency ~ attitude + gender, col=c("white", "lightgrey"), politeness)
 
 
 ###################
